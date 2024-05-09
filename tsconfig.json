@@ -5,9 +5,9 @@
     "module": "ESNext",
     "skipLibCheck": true,
     "baseUrl": "src",
-    "types": ["vite/client"],
+    "types": ["vite/client", "node"],
     "paths": {
-      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"],
+      "@mui/styled-engine": ["./node_modules/@mui/styled-engine-sc"]
     },
 
     /* Bundler mode */
@@ -25,10 +25,10 @@
     "strict": true,
     "noUnusedLocals": true,
     "noUnusedParameters": true,
-    "noFallthroughCasesInSwitch": true,
+    "noFallthroughCasesInSwitch": true
   },
   "endOfLine": "off",
   "preserveSymlinks": true,
   "include": ["src"],
-  "references": [{ "path": "./tsconfig.node.json" }],
+  "references": [{ "path": "./tsconfig.node.json" }]
 }
