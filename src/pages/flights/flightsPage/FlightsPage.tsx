@@ -110,7 +110,7 @@ export const FlightsPage: FC = memo(() => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "50%",
+              width: "70%",
               margin: "auto",
             }}
           >
@@ -138,6 +138,7 @@ export const FlightsPage: FC = memo(() => {
         <Box
           sx={{
             width: "75%",
+            height: "1200px",
             overflow: "auto",
             padding: "0 10px 10px",
             "&::-webkit-scrollbar": {
