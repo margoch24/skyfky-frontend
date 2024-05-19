@@ -6,6 +6,8 @@ export type FlightType = {
   airline: string;
   cabin_class: string;
   scheduled: string;
+  available_seats?: number | SeatType[];
+  seats?: SeatType[];
 
   price: number;
   currency: string;
@@ -20,3 +22,20 @@ export type FlightType = {
 
   is_deleted: boolean;
 };
+
+export type SeatType = {
+  id: string;
+  row: number;
+  column: string;
+  type: string;
+  cabin_class: string;
+
+  is_deleted: boolean;
+};
+
+export enum SeatColumns {
+  A = "A",
+  B = "B",
+  C = "C",
+  D = "D",
+}

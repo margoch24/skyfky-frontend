@@ -10,6 +10,7 @@ import { useUserContext } from "common/hooks/userContext";
 import { getImageHelper } from "common/helpers/getImage";
 
 import DefaultProfilePhoto from "/assets/default_profile_photo.jpeg";
+import { AccountPanelPagesKeys } from "pages/account/constants";
 
 export const Header: FC = memo(() => {
   const { user } = useUserContext();
@@ -86,7 +87,9 @@ export const Header: FC = memo(() => {
                   border: "2px solid white",
                 }}
               >
-                <Link to="/account">
+                <Link
+                  to={`${PagePath.Account}?pageKey=${AccountPanelPagesKeys.Profile}`}
+                >
                   <img
                     height="100%"
                     width="100%"

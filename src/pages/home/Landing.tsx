@@ -1,22 +1,99 @@
 import { LayoutImageBg } from "components/layout/LayoutImageBg";
-import { FC, memo, useState } from "react";
+import { FC, memo, useEffect, useState } from "react";
 
 import LandingBg from "/assets/home/landing_bg.png";
 import { Box, Container, Typography } from "@mui/material";
 import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 import { CustomButton } from "components/wrappers/CustomButton";
-import { ButtonTheme } from "shared/constants";
+import { ButtonTheme, PagePath } from "shared/constants";
 import { PlacesSearchAutocomplete } from "components/wrappers/PlacesSearchAutocomplete";
-import { CustomDatePicker } from "components/wrappers/CustomDatePicker";
+import { CustomDateTimePicker } from "components/wrappers/CustomDateTimePicker";
 import { MapboxPlaceType } from "common/types";
+import { useQueryContext } from "common/hooks/queryContext";
+import { useNavigate } from "react-router-dom";
 
 export const Landing: FC = memo(() => {
-  const [fromInput, setFromInput] = useState("");
-  const [toInput, setToInput] = useState("");
-  const [from, setFrom] = useState<MapboxPlaceType | null>(null);
-  const [to, setTo] = useState<MapboxPlaceType | null>(null);
-  const [departure, setDeparture] = useState<Date | null>(null);
-  const [arrival, setArrival] = useState<Date | null>(null);
+  const { setQuery, query } = useQueryContext();
+  const navigate = useNavigate();
+  const {
+    from: queryFrom,
+    to: queryTo,
+    departureFullDate,
+    arrivalFullDate,
+  } = query ?? {};
+
+  const [fromInput, setFromInput] = useState(
+    queryFrom?.text ? queryFrom?.text : ""
+  );
+  const [toInput, setToInput] = useState(queryTo?.text ? queryTo?.text : "");
+  const [from, setFrom] = useState<MapboxPlaceType | null>(
+    queryFrom ? queryFrom : null
+  );
+  const [to, setTo] = useState<MapboxPlaceType | null>(
+    queryTo ? queryTo : null
+  );
+  const [departure, setDeparture] = useState<Date | null>(
+    departureFullDate ? new Date(departureFullDate) : null
+  );
+  const [arrival, setArrival] = useState<Date | null>(
+    arrivalFullDate ? new Date(arrivalFullDate) : null
+  );
+
+  useEffect(() => {
+    const {
+      from: newQueryFrom,
+      to: newQueryTo,
+      departureFullDate: newDepartureFullDate,
+      arrivalFullDate: newArrivalFullDate,
+    } = query ?? {};
+
+    setDeparture(newDepartureFullDate ? new Date(newDepartureFullDate) : null);
+    setArrival(newArrivalFullDate ? new Date(newArrivalFullDate) : null);
+
+    setFromInput(newQueryFrom?.text ? newQueryFrom?.text : "");
+    setToInput(newQueryTo?.text ? newQueryTo?.text : "");
+    setFrom(newQueryFrom ? newQueryFrom : null);
+    setTo(newQueryTo ? newQueryTo : null);
+  }, [query]);
+
+  const handleSearch = () => {
+    const [from_longitude, from_latitude] = from?.geometry?.coordinates ?? [];
+    const [to_longitude, to_latitude] = to?.geometry?.coordinates ?? [];
+
+    const params = {
+      ...(fromInput
+        ? {
+            from_longitude,
+            from_latitude,
+            from,
+          }
+        : {
+            from_longitude: undefined,
+            from_latitude: undefined,
+            from: null,
+          }),
+      ...(toInput
+        ? {
+            to_longitude,
+            to_latitude,
+            to,
+          }
+        : {
+            to_longitude: undefined,
+            to_latitude: undefined,
+            to: null,
+          }),
+
+      departure: departure?.getTime(),
+      arrival: arrival?.getTime(),
+      departureFullDate: departure,
+      arrivalFullDate: arrival,
+    };
+
+    setQuery((prevQuery) => ({ ...prevQuery, ...params }));
+    navigate(PagePath.Flights);
+  };
+
   return (
     <>
       <LayoutImageBg bgImage={LandingBg} height="100vh">
@@ -89,7 +166,7 @@ export const Landing: FC = memo(() => {
               />
             </Box>
 
-            <CustomDatePicker
+            <CustomDateTimePicker
               sx={{
                 flex: "1 1 0",
               }}
@@ -97,7 +174,7 @@ export const Landing: FC = memo(() => {
               onChange={(newDeparture) => setDeparture(newDeparture)}
               value={departure}
             />
-            <CustomDatePicker
+            <CustomDateTimePicker
               sx={{
                 flex: "1 1 0",
               }}
@@ -105,7 +182,11 @@ export const Landing: FC = memo(() => {
               onChange={(newArrival) => setArrival(newArrival)}
               value={arrival}
             />
-            <CustomButton title="Search" theme={ButtonTheme.Dark} />
+            <CustomButton
+              onClick={handleSearch}
+              title="Search"
+              theme={ButtonTheme.Dark}
+            />
           </Box>
         </Container>
       </LayoutImageBg>

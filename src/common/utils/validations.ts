@@ -3,6 +3,9 @@ export enum ValidationErrorMessages {
   ValidEmailRequired = "Please enter valid email address",
   ValidPasswordRequired = "Your password is not strong enough",
   PasswordsNotMatch = "Passwords do not match",
+  ChildDateOfBirth = "Child age should be under 18",
+  AdultDateOfBirth = "Adult age should be over 18",
+  SameDestination = "You have already specified this airport. Please specify another one",
 }
 
 export const validateIsEmpty = (value: string): boolean => {

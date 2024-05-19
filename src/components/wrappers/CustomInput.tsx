@@ -8,7 +8,7 @@ import {
 import { FC, ReactNode, memo } from "react";
 import { SubtitleFont } from "shared/constants/fonts";
 
-interface CustomInputkProps {
+interface CustomInputProps {
   placeholder: string;
   sx?: SxProps;
   onChange?: (value: string | number) => void;
@@ -25,7 +25,7 @@ interface CustomInputkProps {
   readOnly?: boolean;
 }
 
-export const CustomInput: FC<CustomInputkProps> = memo(
+export const CustomInput: FC<CustomInputProps> = memo(
   ({
     placeholder,
     sx,
@@ -79,6 +79,7 @@ export const CustomInput: FC<CustomInputkProps> = memo(
               fontSize: "18px",
             },
             boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.25)",
+            border: "2px solid #F5F5F5",
             height: "45px",
             ...sx,
           }}

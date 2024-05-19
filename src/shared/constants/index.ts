@@ -1,12 +1,32 @@
+import { FiltersBlockProps, FiltersType } from "common/types";
+import { FilterNumberRange } from "components/wrappers/FilterNumberRange";
+import { FilterToggleOptionsList } from "components/wrappers/FilterToggleOptionsList";
+import { FC } from "react";
+
+export const MAX_CHILD_AGE = 17;
+export const MIN_ADULT_AGE = 18;
+export const TOTAL_SEATS_AMOUNT = 30;
+export const DEFAULT_LIMIT = 20;
+
+export enum CurrencyEnum {
+  EUR = "EUR",
+  USD = "USD",
+}
+
+export const CurrencyToSign: { [key: string]: string } = {
+  [CurrencyEnum.EUR]: "€",
+  [CurrencyEnum.USD]: "$",
+};
+
 export const CURRENCIES = [
   {
-    value: "EUR",
-    label: "€",
+    value: CurrencyEnum.EUR,
+    label: CurrencyToSign[CurrencyEnum.EUR],
     default: true,
   },
   {
-    value: "USD",
-    label: "$",
+    value: CurrencyEnum.USD,
+    label: CurrencyToSign[CurrencyEnum.USD],
   },
 ];
 
@@ -17,6 +37,11 @@ export enum PagePath {
   Account = "/account",
   CreateFlight = "/create-flight",
   CreateReview = "/create-review",
+  Flight = "/flight",
+  CreateTicket = "/create-ticket",
+  Flights = "/flights",
+  About = "/about",
+  ContactUs = "/contact-us",
   All = "*",
 }
 
@@ -29,19 +54,19 @@ export enum ButtonTheme {
 export const HeaderLinks = [
   {
     title: "Home",
-    path: "/",
+    path: PagePath.Home,
   },
   {
     title: "About",
-    path: "/about",
+    path: PagePath.About,
   },
   {
     title: "Flights",
-    path: "/flights",
+    path: PagePath.Flights,
   },
   {
     title: "Contact Us",
-    path: "/contact-us",
+    path: PagePath.ContactUs,
   },
 ];
 
@@ -74,3 +99,10 @@ export const StatisticsData = [
     value: 70,
   },
 ];
+
+export const FilterBlockTypeToComponentMap: {
+  [key in string]: FC<FiltersBlockProps>;
+} = {
+  [FiltersType.NumberRange]: FilterNumberRange,
+  [FiltersType.ToggleOptionsList]: FilterToggleOptionsList,
+};

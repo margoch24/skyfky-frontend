@@ -1,12 +1,25 @@
 import { Box, Button } from "@mui/material";
 import { FC, memo, useEffect, useState } from "react";
 import AuthBg from "/assets/authenticate/auth_bg.png";
-import { AccountPanelPages } from "./constants";
+import { AccountPanelPages, AdminAccountPanelPages } from "./constants";
 import { TitleFont } from "shared/constants/fonts";
 import { DarkBlue } from "shared/constants/colors";
+import { useNavigate } from "react-router-dom";
+import { PagePath } from "shared/constants";
+import { useUserContext } from "common/hooks/userContext";
 
-export const Panel: FC = memo(() => {
-  const defaultPage = AccountPanelPages.find((page) => page?.default);
+interface PanelProps {
+  pageKey?: string;
+}
+
+export const Panel: FC<PanelProps> = memo(({ pageKey }) => {
+  const navigate = useNavigate();
+  const { isAdmin } = useUserContext();
+  const PanelPages = isAdmin ? AdminAccountPanelPages : AccountPanelPages;
+
+  const defaultPage = PanelPages.find((page) =>
+    pageKey ? page.key === pageKey : page?.default
+  );
   const [currentPageKey, setCurrentPageKey] = useState<string | undefined>(
     defaultPage?.key
   );
@@ -14,14 +27,13 @@ export const Panel: FC = memo(() => {
 
   const handleClick = (key: string) => {
     setCurrentPageKey(key);
+    navigate(`${PagePath.Account}?pageKey=${key}`);
   };
 
   useEffect(() => {
-    const currentPage = AccountPanelPages.find(
-      (page) => page?.key === currentPageKey
-    );
+    const currentPage = PanelPages.find((page) => page?.key === currentPageKey);
     setElement(currentPage?.element);
-  }, [currentPageKey]);
+  }, [currentPageKey, PanelPages]);
 
   return (
     <Box
@@ -34,6 +46,7 @@ export const Panel: FC = memo(() => {
       <Box
         sx={{
           maxWidth: "300px",
+          width: "300px",
           backgroundImage: `url(${AuthBg})`,
           backgroundPosition: "center",
           backgroundSize: "cover",
@@ -41,7 +54,7 @@ export const Panel: FC = memo(() => {
           paddingTop: "10rem",
         }}
       >
-        {AccountPanelPages.map(({ key, title }) => (
+        {PanelPages.map(({ key, title }) => (
           <Button
             onClick={() => handleClick(key)}
             key={key}

@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useState } from "react";
+import { FC, memo, useCallback, useEffect, useState } from "react";
 import { Layout } from "components/layout/Layout";
 import { LayoutImageBg } from "components/layout/LayoutImageBg";
 import { Box, Container, Typography } from "@mui/material";
@@ -36,6 +36,10 @@ export const RegisterPage: FC = memo(() => {
   const [nameError, setNameError] = useState<string>("");
   const [repeatPasswordError, setRepeatPasswordError] = useState<string>("");
   const [phoneNumberError, setPhoneNumberError] = useState<string>("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   const validateEmail = () => {
     const isValid = isEmailValid(email);

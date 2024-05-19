@@ -9,10 +9,13 @@ export const CustomButton: FC<{
   title: string;
   onClick?: () => void;
   theme?: string;
-}> = memo(({ title, onClick, theme = ButtonTheme.Dark }) => {
-  const sx = ButtonThemes[theme];
+  sx?: SxProps;
+  disabled?: boolean;
+}> = memo(({ title, onClick, theme = ButtonTheme.Dark, sx = {}, disabled }) => {
+  const buttonSx = { ...ButtonThemes[theme], ...sx };
   return (
     <Button
+      disabled={disabled}
       variant="contained"
       sx={{
         borderRadius: 0,
@@ -23,7 +26,7 @@ export const CustomButton: FC<{
         fontFamily: SubtitleFont,
         height: "45px",
         boxShadow: "none",
-        ...sx,
+        ...buttonSx,
       }}
       onClick={onClick}
     >

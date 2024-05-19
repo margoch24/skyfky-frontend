@@ -6,6 +6,7 @@ import { ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
+import { QueryContextProvider } from "common/hooks/queryContext";
 
 const queryClient = createQueryClient();
 
@@ -13,18 +14,20 @@ function App() {
   return (
     <QueryClientProvider client={queryClient}>
       <LocalizationProvider dateAdapter={AdapterDateFns}>
-        <UserContextProvider>
-          <Router />
-          <ToastContainer
-            position="top-right"
-            autoClose={5000}
-            hideProgressBar={false}
-            newestOnTop={false}
-            closeOnClick
-            draggable
-            theme="light"
-          />
-        </UserContextProvider>
+        <QueryContextProvider>
+          <UserContextProvider>
+            <Router />
+            <ToastContainer
+              position="top-right"
+              autoClose={5000}
+              hideProgressBar={false}
+              newestOnTop={false}
+              closeOnClick
+              draggable
+              theme="light"
+            />
+          </UserContextProvider>
+        </QueryContextProvider>
       </LocalizationProvider>
     </QueryClientProvider>
   );

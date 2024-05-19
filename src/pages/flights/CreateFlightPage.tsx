@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useState } from "react";
+import { FC, memo, useCallback, useEffect, useState } from "react";
 import { Layout } from "components/layout/Layout";
 import { LayoutImageBg } from "components/layout/LayoutImageBg";
 import { Box, Container, IconButton, Typography } from "@mui/material";
@@ -8,7 +8,7 @@ import { CustomButton } from "components/wrappers/CustomButton";
 import { ButtonTheme, CURRENCIES } from "shared/constants";
 import { CustomSelect } from "components/wrappers/CustomSelect";
 import { CABIN_CLASSES, SCHEDULED } from "./constants";
-import { CustomDatePicker } from "components/wrappers/CustomDatePicker";
+import { CustomDateTimePicker } from "components/wrappers/CustomDateTimePicker";
 import { PlacesSearchAutocomplete } from "components/wrappers/PlacesSearchAutocomplete";
 import { CustomPopup } from "components/wrappers/CustomPopup";
 import { UploadPhotoZone } from "components/wrappers/UploadPhotoZone";
@@ -59,7 +59,10 @@ export const CreateFlightPage: FC = memo(() => {
   const [scheduledError, setScheduledError] = useState<string>("");
   const [airlineError, setAirlineError] = useState<string>("");
   const [scoreError, setScoreError] = useState<string>("");
-  const [filenameError, setFilenameError] = useState<string>("");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  });
 
   const handlePopupOpen = () => {
     setOpen(true);
@@ -81,15 +84,28 @@ export const CreateFlightPage: FC = memo(() => {
   const validateFrom = () => {
     if (!from) {
       setFromError(ValidationErrorMessages.FieldRequired);
+      return !!from;
     }
-    return !!from;
+
+    if (from?.text === to?.text) {
+      setFromError(ValidationErrorMessages.SameDestination);
+      return false;
+    }
+
+    return true;
   };
 
   const validateTo = () => {
     if (!to) {
       setToError(ValidationErrorMessages.FieldRequired);
+      return !!to;
     }
-    return !!to;
+    if (to?.text === from?.text) {
+      setToError(ValidationErrorMessages.SameDestination);
+      return false;
+    }
+
+    return true;
   };
 
   const validateDeparture = () => {
@@ -144,13 +160,6 @@ export const CreateFlightPage: FC = memo(() => {
     return !!score;
   };
 
-  const validateFilename = () => {
-    if (!newFilename) {
-      setFilenameError(ValidationErrorMessages.FieldRequired);
-    }
-    return !!newFilename;
-  };
-
   const validateAll = (): boolean => {
     const fromValid = validateFrom();
     const toValid = validateTo();
@@ -161,7 +170,6 @@ export const CreateFlightPage: FC = memo(() => {
     const scheduledValid = validateScheduled();
     const airlineValid = validateAirline();
     const scoreValid = validateScore();
-    const filenameValid = validateFilename();
 
     return (
       fromValid &&
@@ -172,8 +180,7 @@ export const CreateFlightPage: FC = memo(() => {
       cabinClassValid &&
       scheduledValid &&
       airlineValid &&
-      scoreValid &&
-      filenameValid
+      scoreValid
     );
   };
 
@@ -194,7 +201,7 @@ export const CreateFlightPage: FC = memo(() => {
       scheduled,
       price,
       currency,
-      photo: newFilename,
+      ...(newFilename && { photo: newFilename }),
     };
     return await postFlight(params, accessToken);
   }, [
@@ -315,7 +322,7 @@ export const CreateFlightPage: FC = memo(() => {
                 }}
               >
                 <Box sx={{ flex: "1 1 0" }}>
-                  <CustomDatePicker
+                  <CustomDateTimePicker
                     label="Departure*"
                     onFocus={() => {
                       setDepartureError("");
@@ -327,7 +334,7 @@ export const CreateFlightPage: FC = memo(() => {
                   />
                 </Box>
                 <Box sx={{ flex: "1 1 0", marginLeft: "25px" }}>
-                  <CustomDatePicker
+                  <CustomDateTimePicker
                     label="Arrival*"
                     onFocus={() => {
                       setArrivalError("");
@@ -455,11 +462,6 @@ export const CreateFlightPage: FC = memo(() => {
                   sx={{ marginTop: "30px", zIndex: 3 }}
                   placeholder="Click to add image"
                   value={newFilename || ""}
-                  onFocus={() => {
-                    setFilenameError("");
-                  }}
-                  onBlur={validateFilename}
-                  error={filenameError}
                 />
 
                 {newFilename && (

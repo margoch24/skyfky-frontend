@@ -74,7 +74,6 @@ export const PlacesSearchAutocomplete: FC<PlacesSearchAutocompleteProps> = memo(
     const handleBlur = () => {
       onBlur?.();
     };
-    console.log(places);
 
     return (
       <Box
@@ -93,7 +92,7 @@ export const PlacesSearchAutocomplete: FC<PlacesSearchAutocompleteProps> = memo(
           inputValue={inputValue}
           onInputChange={handleInputChange}
           getOptionLabel={(option: string | MapboxPlaceType) =>
-            typeof option === "string" ? option : option.properties.full_address
+            typeof option === "string" ? option : option.place_name_en
           }
           onChange={handleChange}
           onFocus={handleFocus}
@@ -170,7 +169,7 @@ export const PlacesSearchAutocomplete: FC<PlacesSearchAutocompleteProps> = memo(
                   paddingLeft: "1rem",
                 }}
               >
-                {option.properties.full_address}
+                {option.place_name_en}
               </Box>
             );
           }}

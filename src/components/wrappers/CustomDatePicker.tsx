@@ -1,45 +1,56 @@
 import { Box, SxProps, Typography } from "@mui/material";
-import { DateTimePicker } from "@mui/x-date-pickers";
+import { DatePicker } from "@mui/x-date-pickers";
 import { FC, memo } from "react";
 import { GreyColor } from "shared/constants/colors";
 import { SubtitleFont } from "shared/constants/fonts";
 
-interface CustomDateProps {
+interface CustomDatePickerProps {
   label?: string;
   sx?: SxProps;
   onChange?: (value: Date | null) => void;
   onBlur?: () => void;
   onFocus?: () => void;
+  onAccept?: () => void;
   error?: string;
   value: Date | null;
 }
 
-export const CustomDatePicker: FC<CustomDateProps> = memo(
-  ({ sx = {}, label, onChange, onBlur, onFocus, error, value }) => {
+export const CustomDatePicker: FC<CustomDatePickerProps> = memo(
+  ({ sx = {}, label, onChange, onBlur, onFocus, onAccept, error, value }) => {
     const handleChange = (value: Date | null) => {
       onChange?.(value);
     };
 
-    const handleAccept = () => {
+    const handleBlur = () => {
       onBlur?.();
     };
 
-    const handleOpen = () => {
+    const handleFocus = () => {
       onFocus?.();
     };
 
+    const handleAccept = () => {
+      onAccept?.();
+    };
     return (
       <Box sx={{ display: "flex", flexDirection: "column" }}>
-        <DateTimePicker
+        <DatePicker
+          views={["year", "month", "day"]}
           onChange={handleChange}
           onAccept={handleAccept}
-          onOpen={handleOpen}
+          slotProps={{
+            textField: {
+              onFocus: handleFocus,
+              onBlur: handleBlur,
+            },
+          }}
           value={value}
           sx={{
             backgroundColor: "white",
             borderRadius: 0,
             opacity: "80%",
             boxShadow: "4px 4px 8px rgba(0, 0, 0, 0.25)",
+            border: "2px solid #F5F5F5",
 
             height: "45px",
             width: "100%",
