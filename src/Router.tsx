@@ -13,6 +13,7 @@ import { FlightPage } from "pages/flights/FlightPage";
 import { CreateTicketPage } from "pages/tickets/CreateTicketPage";
 import { FlightsPage } from "pages/flights/flightsPage/FlightsPage";
 import { CreateReviewPage } from "pages/reviews/CreateReviewPage";
+import { CheckTicketPage } from "pages/tickets/CheckTicketPage";
 
 export const Router: FC = memo(() => {
   const { user, isAdmin } = useUserContext();
@@ -30,6 +31,9 @@ export const Router: FC = memo(() => {
         )}
         {user && isAdmin && (
           <Route path={PagePath.CreateFlight} element={<CreateFlightPage />} />
+        )}
+        {user && isAdmin && (
+          <Route path={PagePath.CheckTicket} element={<CheckTicketPage />} />
         )}
         <Route path={PagePath.Flight} element={<FlightPage />} />
         {user && (

@@ -43,6 +43,7 @@ export enum PagePath {
   About = "/about",
   ContactUs = "/contact-us",
   All = "*",
+  CheckTicket = "/check-ticket",
 }
 
 export enum ButtonTheme {

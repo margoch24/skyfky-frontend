@@ -1,61 +1,60 @@
 import { useNavigate } from "react-router-dom";
 
-import { Box, Button, Container, SvgIcon, Typography } from "@mui/material";
+import { Box, Typography } from "@mui/material";
 import { FC, memo } from "react";
+import { Layout } from "components/layout/Layout";
+import { DarkColor } from "shared/constants/colors";
+import { CustomButton } from "components/wrappers/CustomButton";
+import { ButtonTheme } from "shared/constants";
+import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 
 export const Page404: FC = memo(() => {
   const navigate = useNavigate();
 
   return (
-    <Box
-      component="main"
-      sx={{
-        minHeight: "100%",
-        height: "100vh",
-      }}
-    >
-      <Container maxWidth="md">
-        <Box
+    <Layout>
+      <Box
+        sx={{
+          height: "700px",
+          backgroundColor: DarkColor,
+          justifyContent: "center",
+          display: "flex",
+          flexDirection: "column",
+          textAlign: "center",
+        }}
+      >
+        <Typography
           sx={{
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "row",
+            fontFamily: TitleFont,
+            color: "white",
+            fontSize: "48px",
           }}
         >
-          <Box
-            sx={{
-              mb: 3,
-              textAlign: "center",
-            }}
-          >
-            {/* <img
-              alt="Page not found"
-              src={Image404}
-              style={{
-                display: "inline-block",
-                maxWidth: "100%",
-                width: 400,
-              }}
-            /> */}
-          </Box>
-          <Typography align="center" sx={{ mb: 3 }} variant="h3">
-            404: The page you are looking for isn’t here
-          </Typography>
-          <Typography align="center" color="text.secondary" variant="body1">
-            You either tried some shady route or page is under the development.
-          </Typography>
-          <Button
+          404: The page you are looking for isn’t here
+        </Typography>
+        <Typography
+          sx={{
+            fontFamily: SubtitleFont,
+            color: "white",
+            fontSize: "25px",
+            opacity: "80%",
+            marginTop: "2rem",
+          }}
+        >
+          You either tried some shady route or page is under the development.
+        </Typography>
+        <Box
+          sx={{
+            marginTop: "3rem",
+          }}
+        >
+          <CustomButton
             onClick={() => navigate(-1)}
-            startIcon={
-              <SvgIcon fontSize="small">{/* <ArrowLeftIcon /> */}</SvgIcon>
-            }
-            sx={{ mt: 3 }}
-            variant="contained"
-          >
-            Go back
-          </Button>
+            title="Go Back"
+            theme={ButtonTheme.Light}
+          />
         </Box>
-      </Container>
-    </Box>
+      </Box>
+    </Layout>
   );
 });
