@@ -42,6 +42,7 @@ export const Reviews: FC = memo(() => {
   return (
     <>
       <Container
+        maxWidth="xl"
         sx={{
           padding: "80px 0",
           textAlign: "center",

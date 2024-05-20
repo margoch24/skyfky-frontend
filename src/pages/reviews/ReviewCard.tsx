@@ -26,6 +26,7 @@ export const ReviewCard: FC<{
           position: "absolute",
           left: "20px",
           top: "20px",
+          borderRadius: "50%",
         }}
         height="140px"
         width="140px"
