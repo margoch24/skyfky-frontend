@@ -29,6 +29,8 @@ export enum Endpoints {
   PostTicket = "/ticket",
   GetFutureTickets = "/future-tickets",
   GetPastTickets = "/past-tickets",
+  PostReview = "/review",
+  GetReviews = "/reviews",
 }
 
 export type ResponseData<T> = {
@@ -49,6 +51,7 @@ export enum QueryKeys {
   GetDiscounts = "get-discounts",
   GetFutureTickets = "get-future-tickets",
   GetPastTickets = "get-past-tickets",
+  GetReviews = "get-reviews",
 }
 
 export type ImageType = {

@@ -1,12 +1,20 @@
-import { FC, memo } from "react";
+import { FC, memo, useCallback } from "react";
 
-import { Container, Typography } from "@mui/material";
+import { Box, Container, Typography } from "@mui/material";
 import { TitleFont } from "shared/constants/fonts";
 import { DarkColor } from "shared/constants/colors";
 import { CustomButton } from "components/wrappers/CustomButton";
 import { ButtonTheme, PagePath } from "shared/constants";
 import { useUserContext } from "common/hooks/userContext";
 import { useNavigate } from "react-router-dom";
+import { Carousel } from "components/wrappers/Carousel";
+import { getReviews } from "api/requests/reviews/getReviews";
+import { useQuery } from "@tanstack/react-query";
+import { QueryKeys, ResponseData } from "common/types";
+import { AxiosResponse } from "axios";
+import { debounce } from "common/helpers/debounce";
+import { ReviewType } from "pages/reviews/constants";
+import { ReviewCard } from "pages/reviews/ReviewCard";
 
 export const Reviews: FC = memo(() => {
   const { user } = useUserContext();
@@ -14,6 +22,23 @@ export const Reviews: FC = memo(() => {
   const handleClick = () => {
     navigate(user ? PagePath.CreateReview : PagePath.Login);
   };
+
+  const fetchFunc = useCallback(async () => {
+    const params = {
+      limit: 9,
+    };
+    return await getReviews(params);
+  }, []);
+
+  const { data: axiosResponse } = useQuery<
+    AxiosResponse<ResponseData<ReviewType[]>>
+  >({
+    queryKey: [QueryKeys.GetReviews],
+    queryFn: () => debounce(fetchFunc(), 500),
+    refetchOnWindowFocus: false,
+  });
+
+  const reviews: ReviewType[] = axiosResponse?.data?.data ?? [];
   return (
     <>
       <Container
@@ -22,22 +47,44 @@ export const Reviews: FC = memo(() => {
           textAlign: "center",
         }}
       >
-        <Typography
-          sx={{
-            color: DarkColor,
-            fontFamily: TitleFont,
-            fontSize: "30px",
-            textAlign: "left",
-          }}
-        >
-          Opinions <b>matter</b>
-        </Typography>
+        <Box>
+          <Typography
+            sx={{
+              color: DarkColor,
+              fontFamily: TitleFont,
+              fontSize: "30px",
+              textAlign: "left",
+            }}
+          >
+            Opinions <b>matter</b>
+          </Typography>
 
-        <CustomButton
-          onClick={handleClick}
-          title="Share your opinion"
-          theme={ButtonTheme.Transparent}
-        />
+          {reviews?.length > 0 && (
+            <Box
+              sx={{
+                margin: "60px 0",
+              }}
+            >
+              <Carousel>
+                {reviews?.map((review) => (
+                  <ReviewCard
+                    sx={{
+                      margin: "0 auto",
+                    }}
+                    review={review}
+                    key={review?.id}
+                  />
+                ))}
+              </Carousel>
+            </Box>
+          )}
+
+          <CustomButton
+            onClick={handleClick}
+            title="Share your opinion"
+            theme={ButtonTheme.Transparent}
+          />
+        </Box>
       </Container>
     </>
   );
