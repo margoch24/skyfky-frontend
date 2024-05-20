@@ -67,6 +67,12 @@ export const ReviewCard: FC<{
             fontSize: "16px",
             color: SubtitleColor,
             wordWrap: "break-word",
+            overflow: "auto",
+            maxHeight: "150px",
+
+            "&::-webkit-scrollbar": {
+              display: "none",
+            },
           }}
         >
           {message}
