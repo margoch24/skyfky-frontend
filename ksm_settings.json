@@ -1,0 +1,7 @@
+{
+    "instance":
+    {
+      "program": "npm",
+      "arguments": ["run", "dev"]
+    }
+  }
