@@ -14,10 +14,11 @@ export const ReviewCard: FC<{
   return (
     <Box
       sx={{
-        width: "350px",
+        maxWidth: "350px",
         height: "400px",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
         position: "relative",
+        overflow: "hidden",
         ...sx,
       }}
     >
@@ -68,7 +69,8 @@ export const ReviewCard: FC<{
             color: SubtitleColor,
             wordWrap: "break-word",
             overflow: "auto",
-            maxHeight: "150px",
+            maxHeight: "100px",
+            minHeight: "60px",
 
             "&::-webkit-scrollbar": {
               display: "none",

@@ -14,7 +14,7 @@ import { CustomInput } from "components/wrappers/CustomInput";
 import { CustomButton } from "components/wrappers/CustomButton";
 import { ButtonTheme, PagePath } from "shared/constants";
 import { SubtitleFont } from "shared/constants/fonts";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import {
   ValidationErrorMessages,
   isEmailValid,
@@ -31,9 +31,10 @@ import { postLogin } from "api/requests/auth/postLogin";
 import { DarkColor } from "shared/constants/colors";
 
 export const LoginPage: FC = memo(() => {
-  const { user, isAdmin, setIsAdmin } = useUserContext();
+  const { user, isAdmin, setIsAdmin, setAccessToken } = useUserContext();
   const navigate = useNavigate();
-  const { setAccessToken } = useUserContext();
+  const location = useLocation();
+  const { pathname = PagePath.Home, search = "" } = location?.state?.from ?? {};
 
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
@@ -92,7 +93,7 @@ export const LoginPage: FC = memo(() => {
 
       setAccessToken(data?.access_token);
 
-      setTimeout(() => navigate(PagePath.Home), 500);
+      setTimeout(() => navigate(pathname + search, { replace: true }), 700);
     },
     onError: (err: Error) => {
       console.log(err);
@@ -135,9 +136,15 @@ export const LoginPage: FC = memo(() => {
   return (
     <>
       <Layout>
-        <LayoutImageBg bgImage={AuthBg} height="100vh">
+        <LayoutImageBg
+          bgImage={AuthBg}
+          sx={{
+            minHeight: "100vh",
+          }}
+        >
           <Container
             sx={{
+              margin: "auto",
               height: "100%",
               display: "flex",
               flexDirection: "column",
@@ -146,12 +153,19 @@ export const LoginPage: FC = memo(() => {
           >
             <Box
               sx={{
-                width: "50%",
+                width: {
+                  md: "50%",
+                  sm: "70%",
+                  xs: "100%",
+                },
                 margin: "auto",
                 display: "flex",
                 flexDirection: "column",
                 textAlign: "center",
-                paddingTop: "5rem",
+                paddingTop: {
+                  sm: "5rem",
+                  xs: "10rem",
+                },
               }}
             >
               <CustomInput
@@ -191,10 +205,16 @@ export const LoginPage: FC = memo(() => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
+                  flexDirection: {
+                    sm: "row",
+                    xs: "column",
+                  },
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginTop: "10rem",
+                  marginTop: {
+                    sm: "10rem",
+                    xs: "8rem",
+                  },
                 }}
               >
                 <Typography
@@ -202,6 +222,14 @@ export const LoginPage: FC = memo(() => {
                     fontSize: "20px",
                     color: "white",
                     fontFamily: SubtitleFont,
+                    marginBottom: {
+                      sm: 0,
+                      xs: "2rem",
+                    },
+                    marginRight: {
+                      sm: 0,
+                      xs: "auto",
+                    },
                   }}
                 >
                   New around here?

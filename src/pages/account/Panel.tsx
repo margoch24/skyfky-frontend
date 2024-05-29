@@ -1,12 +1,11 @@
-import { Box, Button } from "@mui/material";
+import { Box } from "@mui/material";
 import { FC, memo, useEffect, useState } from "react";
-import AuthBg from "/assets/authenticate/auth_bg.png";
 import { AccountPanelPages, AdminAccountPanelPages } from "./constants";
-import { TitleFont } from "shared/constants/fonts";
-import { DarkBlue } from "shared/constants/colors";
 import { useNavigate } from "react-router-dom";
 import { PagePath } from "shared/constants";
 import { useUserContext } from "common/hooks/userContext";
+import { PanelDesktop } from "./PanelDesktop";
+import { PanelMobile } from "./PanelMobile";
 
 interface PanelProps {
   pageKey?: string;
@@ -41,50 +40,29 @@ export const Panel: FC<PanelProps> = memo(({ pageKey }) => {
         display: "flex",
         flexDirection: "row",
         minHeight: "100vh",
+        overflow: "hidden",
       }}
     >
-      <Box
-        sx={{
-          maxWidth: "300px",
-          width: "300px",
-          backgroundImage: `url(${AuthBg})`,
-          backgroundPosition: "center",
-          backgroundSize: "cover",
-          backgroundRepeat: "no-repeat",
-          paddingTop: "10rem",
-        }}
-      >
-        {PanelPages.map(({ key, title }) => (
-          <Button
-            onClick={() => handleClick(key)}
-            key={key}
-            sx={{
-              paddingTop: "15px",
-              paddingLeft: "30px",
-              width: "100%",
-              borderRadius: 0,
-              backgroundColor: currentPageKey === key ? "white" : "transparent",
-              fontFamily: TitleFont,
-              fontSize: "25px",
-              color: currentPageKey === key ? DarkBlue : "white",
-              textTransform: "none",
-              justifyContent: "left",
-              ...(currentPageKey === key && {
-                "&:hover": {
-                  backgroundColor: "white",
-                },
-              }),
-            }}
-          >
-            {title}
-          </Button>
-        ))}
-      </Box>
+      <PanelDesktop
+        currentPageKey={currentPageKey}
+        PanelPages={PanelPages}
+        handleClick={handleClick}
+      />
+
+      <PanelMobile
+        currentPageKey={currentPageKey}
+        PanelPages={PanelPages}
+        handleClick={handleClick}
+      />
 
       <Box
         sx={{
           width: "100%",
           paddingTop: "10rem",
+          paddingBottom: {
+            sm: 0,
+            xs: "5rem",
+          },
         }}
       >
         <Box

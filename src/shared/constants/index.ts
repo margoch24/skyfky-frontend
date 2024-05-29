@@ -44,6 +44,7 @@ export enum PagePath {
   ContactUs = "/contact-us",
   All = "*",
   CheckTicket = "/check-ticket",
+  Page404 = "/not-found",
 }
 
 export enum ButtonTheme {
@@ -107,3 +108,8 @@ export const FilterBlockTypeToComponentMap: {
   [FiltersType.NumberRange]: FilterNumberRange,
   [FiltersType.ToggleOptionsList]: FilterToggleOptionsList,
 };
+
+export enum UserRole {
+  Admin = "admin",
+  User = "user",
+}

@@ -23,7 +23,6 @@ interface TicketCreationPanelProps {
 
 export const TicketCreationPanel: FC<TicketCreationPanelProps> = memo(
   ({ flight }) => {
-    console.log(flight.available_seats);
     const [passengers, setPassengers] = useState<PassengerInfoType[]>([]);
 
     const defaultPage = TicketCreationPages.find((page) => page?.default);

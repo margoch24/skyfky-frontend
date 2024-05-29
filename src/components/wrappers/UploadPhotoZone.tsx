@@ -65,7 +65,16 @@ export const UploadPhotoZone: FC<UploadPhotoZoneProps> = memo(
     };
 
     return (
-      <>
+      <Box
+        sx={{
+          "& div div": {
+            padding: {
+              sm: "0 3rem",
+              xs: "0 1rem",
+            },
+          },
+        }}
+      >
         <DropzoneArea
           fileObjects
           acceptedFiles={["image/*"]}
@@ -86,7 +95,7 @@ export const UploadPhotoZone: FC<UploadPhotoZoneProps> = memo(
             theme={ButtonTheme.Dark}
           />
         </Box>
-      </>
+      </Box>
     );
   }
 );

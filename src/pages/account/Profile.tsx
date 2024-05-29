@@ -115,17 +115,31 @@ export const Profile: FC = memo(() => {
   return (
     <Box
       sx={{
-        width: "650px",
+        "@media (max-width: 300px)": {
+          maxWidth: "210px",
+          margin: "0 5px",
+        },
+        margin: "0 1rem",
       }}
     >
       <Box
         sx={{
           display: "flex",
-          flexDirection: "row",
+          flexDirection: {
+            sm: "row",
+            xs: "column-reverse",
+          },
           justifyContent: "space-between",
         }}
       >
-        <Box>
+        <Box
+          sx={{
+            marginRight: {
+              md: "10rem",
+              xs: "2rem",
+            },
+          }}
+        >
           {!isAdmin && (
             <Box>
               <Typography
@@ -211,6 +225,10 @@ export const Profile: FC = memo(() => {
               height: "200px",
               overflow: "hidden",
               borderRadius: "50%",
+              marginBottom: {
+                sm: 0,
+                xs: "2rem",
+              },
             }}
           >
             <img
@@ -225,8 +243,10 @@ export const Profile: FC = memo(() => {
             <CustomPopup onClose={handlePopupClose} open={open}>
               <Box
                 sx={{
-                  width: "500px",
-                  padding: "3rem",
+                  padding: {
+                    sm: "3rem",
+                    xs: "1.5rem",
+                  },
                 }}
               >
                 <Typography
@@ -250,12 +270,25 @@ export const Profile: FC = memo(() => {
         sx={{
           display: "flex",
           justifyContent: "space-between",
-          flexDirection: "row",
+          flexDirection: {
+            sm: "row",
+            xs: "column-reverse",
+          },
           alignItems: "center",
           marginTop: "5rem",
         }}
       >
         <CustomButton
+          sx={{
+            marginTop: {
+              sm: 0,
+              xs: "2rem",
+            },
+            width: {
+              sm: "auto",
+              xs: "100%",
+            },
+          }}
           onClick={logoutMutate}
           title="Logout"
           theme={ButtonTheme.Transparent}
@@ -263,6 +296,12 @@ export const Profile: FC = memo(() => {
 
         {!isAdmin && (
           <CustomButton
+            sx={{
+              width: {
+                sm: "auto",
+                xs: "100%",
+              },
+            }}
             onClick={handlePopupOpen}
             title="Change photo"
             theme={ButtonTheme.Dark}

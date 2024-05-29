@@ -1,5 +1,5 @@
 import { FC, memo, useCallback } from "react";
-import { Box, Typography } from "@mui/material";
+import { Box, SxProps, Typography } from "@mui/material";
 import { DarkColor } from "shared/constants/colors";
 import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 import { FlightType } from "pages/flights/types";
@@ -11,10 +11,11 @@ import { debounce } from "common/helpers/debounce";
 
 interface TicketCardPlacesProps {
   flight?: FlightType;
+  sx?: SxProps;
 }
 
 export const TicketCardPlaces: FC<TicketCardPlacesProps> = memo(
-  ({ flight }) => {
+  ({ flight, sx }) => {
     const fetchFromFunc = useCallback(async () => {
       return await getMapboxPlaces({
         longitude: flight?.from_longitude,
@@ -55,6 +56,7 @@ export const TicketCardPlaces: FC<TicketCardPlacesProps> = memo(
       <Box
         sx={{
           marginTop: "15px",
+          ...sx,
         }}
       >
         <Box>

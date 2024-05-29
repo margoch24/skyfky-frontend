@@ -60,7 +60,6 @@ export const PastTickets: FC = memo(() => {
         sx={{
           minHeight: "800px",
           height: "889px",
-          width: "100%",
           overflow: "auto",
           padding: "10px",
           marginTop: "-8rem",

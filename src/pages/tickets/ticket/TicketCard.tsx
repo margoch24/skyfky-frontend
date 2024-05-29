@@ -40,10 +40,12 @@ export const TicketCard: FC<TicketCardProps> = memo(
       <Box
         ref={lastTicketRef}
         sx={{
-          minHheight: "400px",
-          width: "750px",
+          minHeight: "400px",
           boxShadow: "4px 3px 10px rgba(0, 0, 0, 0.25)",
           marginTop: "4rem",
+          minWidth: {
+            lg: "740px",
+          },
         }}
       >
         <Box
@@ -254,7 +256,12 @@ export const TicketCard: FC<TicketCardProps> = memo(
             justifyContent: "space-between",
           }}
         >
-          <TicketCardPlaces flight={ticket?.flight} />
+          <TicketCardPlaces
+            sx={{
+              marginRight: "3rem",
+            }}
+            flight={ticket?.flight}
+          />
           <TicketCardDates flight={ticket?.flight} />
         </Box>
 

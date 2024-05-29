@@ -2,7 +2,7 @@ import { LayoutImageBg } from "components/layout/LayoutImageBg";
 import { FC, memo, useEffect, useState } from "react";
 
 import LandingBg from "/assets/home/landing_bg.png";
-import { Box, Container, Typography } from "@mui/material";
+import { Container, Grid, Typography } from "@mui/material";
 import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 import { CustomButton } from "components/wrappers/CustomButton";
 import { ButtonTheme, PagePath } from "shared/constants";
@@ -96,10 +96,21 @@ export const Landing: FC = memo(() => {
 
   return (
     <>
-      <LayoutImageBg bgImage={LandingBg} height="100vh">
+      <LayoutImageBg
+        bgImage={LandingBg}
+        sx={{
+          minHeight: "100vh",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "center",
+        }}
+      >
         <Container
           sx={{
-            marginTop: "10rem",
+            margin: {
+              sm: "15rem auto 5rem",
+              xs: "10rem auto 5rem",
+            },
             height: "100%",
             display: "flex",
             flexDirection: "column",
@@ -128,66 +139,82 @@ export const Landing: FC = memo(() => {
             Say goodbye to long queues and tedious booking processes.
           </Typography>
 
-          <Box
+          <Grid
             sx={{
-              marginTop: "15rem",
-              display: "flex",
-              alignItems: "center",
-              gap: "50px",
+              marginTop: {
+                xs: "10rem",
+                md: "15rem",
+              },
+              alignItems: "end",
+              justifyContent: "space-between",
             }}
+            container
+            spacing={4}
           >
-            <Box
-              sx={{
-                flex: "1 1 0",
-                minWidth: "210px",
-              }}
-            >
+            <Grid item md={2.4} sm={6} xs={12}>
               <PlacesSearchAutocomplete
+                sx={{
+                  "& .MuiFormControl-root": {
+                    padding: "2px 5px 2px 0",
+                  },
+                }}
                 label="From"
                 onChange={(newFrom) => setFrom(newFrom as MapboxPlaceType)}
                 onInputChange={(newInputFrom) => setFromInput(newInputFrom)}
                 value={from}
                 inputValue={fromInput}
               />
-            </Box>
+            </Grid>
 
-            <Box
-              sx={{
-                flex: "1 1 0",
-                minWidth: "210px",
-              }}
-            >
+            <Grid item md={2.4} sm={6} xs={12}>
               <PlacesSearchAutocomplete
+                sx={{
+                  "& .MuiFormControl-root": {
+                    padding: "2px 5px 2px 0",
+                  },
+                }}
                 label="To"
                 onChange={(newTo) => setTo(newTo as MapboxPlaceType)}
                 onInputChange={(newInputTo) => setToInput(newInputTo)}
                 value={to}
                 inputValue={toInput}
               />
-            </Box>
+            </Grid>
 
-            <CustomDateTimePicker
+            <Grid item md={2.4} sm={6} xs={12}>
+              <CustomDateTimePicker
+                sx={{}}
+                label="Departure"
+                onChange={(newDeparture) => setDeparture(newDeparture)}
+                value={departure}
+              />
+            </Grid>
+            <Grid item md={2.4} sm={6} xs={12}>
+              <CustomDateTimePicker
+                sx={{}}
+                label="Arrival"
+                onChange={(newArrival) => setArrival(newArrival)}
+                value={arrival}
+              />
+            </Grid>
+            <Grid
               sx={{
-                flex: "1 1 0",
+                textAlign: {
+                  sm: "right",
+                  xs: "center",
+                },
               }}
-              label="Departure"
-              onChange={(newDeparture) => setDeparture(newDeparture)}
-              value={departure}
-            />
-            <CustomDateTimePicker
-              sx={{
-                flex: "1 1 0",
-              }}
-              label="Arrival"
-              onChange={(newArrival) => setArrival(newArrival)}
-              value={arrival}
-            />
-            <CustomButton
-              onClick={handleSearch}
-              title="Search"
-              theme={ButtonTheme.Dark}
-            />
-          </Box>
+              item
+              md={2.4}
+              xs={12}
+            >
+              <CustomButton
+                onClick={handleSearch}
+                title="Search"
+                theme={ButtonTheme.Dark}
+              />
+            </Grid>
+          </Grid>
         </Container>
       </LayoutImageBg>
     </>

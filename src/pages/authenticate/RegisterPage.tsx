@@ -148,23 +148,37 @@ export const RegisterPage: FC = memo(() => {
   return (
     <>
       <Layout>
-        <LayoutImageBg bgImage={AuthBg} height="100vh">
+        <LayoutImageBg
+          bgImage={AuthBg}
+          sx={{
+            minHeight: "100vh",
+            padding: "1rem 0 2rem",
+          }}
+        >
           <Container
             sx={{
               height: "100%",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",
+              margin: "auto",
             }}
           >
             <Box
               sx={{
-                width: "50%",
+                width: {
+                  md: "50%",
+                  sm: "70%",
+                  xs: "100%",
+                },
                 margin: "auto",
                 display: "flex",
                 flexDirection: "column",
                 textAlign: "center",
-                paddingTop: "5rem",
+                paddingTop: {
+                  sm: "5rem",
+                  xs: "7rem",
+                },
               }}
             >
               <Box
@@ -254,10 +268,16 @@ export const RegisterPage: FC = memo(() => {
               <Box
                 sx={{
                   display: "flex",
-                  flexDirection: "row",
                   justifyContent: "space-between",
                   alignItems: "center",
-                  marginTop: "10rem",
+                  marginTop: {
+                    sm: "10rem",
+                    xs: "8rem",
+                  },
+                  flexDirection: {
+                    sm: "row",
+                    xs: "column",
+                  },
                 }}
               >
                 <Typography
@@ -265,6 +285,14 @@ export const RegisterPage: FC = memo(() => {
                     fontSize: "20px",
                     color: "white",
                     fontFamily: SubtitleFont,
+                    marginBottom: {
+                      sm: 0,
+                      xs: "2rem",
+                    },
+                    marginRight: {
+                      sm: 0,
+                      xs: "auto",
+                    },
                   }}
                 >
                   Already have an account?

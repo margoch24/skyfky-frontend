@@ -15,11 +15,11 @@ const responsive = {
     items: 3,
   },
   tablet: {
-    breakpoint: { max: 1300, min: 1024 },
+    breakpoint: { max: 1300, min: 1023 },
     items: 2,
   },
   mobile: {
-    breakpoint: { max: 1024, min: 0 },
+    breakpoint: { max: 1023, min: 0 },
     items: 1,
   },
 };
@@ -39,6 +39,7 @@ export const Carousel: FC<{
     return (
       <Button
         sx={{
+          minWidth: "fit-content",
           position: "absolute",
           cursor: "pointer",
           ...(arrowType === "right" && { right: 0 }),
@@ -52,9 +53,10 @@ export const Carousel: FC<{
   return (
     <Box
       sx={{
+        margin: "0 10px",
         "& .react-multi-carousel-track": {
           alignItems: "center",
-          padding: "10px",
+          padding: "10px 0",
         },
       }}
     >

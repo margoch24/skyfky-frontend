@@ -2,7 +2,7 @@ import { LayoutImageBg } from "components/layout/LayoutImageBg";
 import { FC, memo } from "react";
 
 import StatisticsBg from "/assets/home/statistics_bg.png";
-import { Box, Container, Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import { SecondTitleFont, SubtitleFont } from "shared/constants/fonts";
 import { DarkColor } from "shared/constants/colors";
 import { StatisticsData } from "shared/constants";
@@ -10,23 +10,34 @@ import { StatisticsData } from "shared/constants";
 export const Statistics: FC = memo(() => {
   return (
     <>
-      <LayoutImageBg bgImage={StatisticsBg} height="300px">
-        <Container
+      <LayoutImageBg
+        bgImage={StatisticsBg}
+        sx={{
+          minHeight: "300px",
+        }}
+      >
+        <Grid
+          container
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            justifyContent: "center",
-            margin: "auto",
-            gap: "15rem",
+            maxWidth: "1536px",
+            margin: {
+              sm: "auto",
+              xs: "1rem auto 4rem",
+            },
+          }}
+          rowSpacing={{
+            sm: 0,
+            xs: 6,
           }}
         >
           {StatisticsData.map(({ key, value }, index) => (
-            <Box
+            <Grid
+              item
               key={index}
+              sm={12 / StatisticsData.length}
+              xs={12}
               sx={{
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
+                textAlign: "center",
               }}
             >
               <Typography
@@ -49,9 +60,9 @@ export const Statistics: FC = memo(() => {
               >
                 {key}
               </Typography>
-            </Box>
+            </Grid>
           ))}
-        </Container>
+        </Grid>
       </LayoutImageBg>
     </>
   );

@@ -94,24 +94,49 @@ export const CreateReviewPage: FC = memo(() => {
   return (
     <>
       <Layout>
-        <LayoutImageBg bgImage={CreateReviewBg} height="100vh" minHeight={true}>
+        <LayoutImageBg
+          bgImage={CreateReviewBg}
+          sx={{
+            minHeight: "100vh",
+            justifyContent: "center",
+            padding: "4rem 0",
+
+            "@media (max-width: 1024px) and (max-height: 1000px)": {
+              padding: "10rem 0",
+            },
+          }}
+        >
           <Container
             maxWidth="xl"
             sx={{
               height: "100%",
               display: "flex",
-              flexDirection: "row",
+              flexDirection: {
+                md: "row",
+                xs: "column",
+              },
               alignItems: "baseline",
             }}
           >
             <Box
               sx={{
                 flex: "1 1 0",
+                textAlign: {
+                  md: "left",
+                  xs: "center",
+                },
+                marginBottom: {
+                  md: 0,
+                  xs: "5rem",
+                },
               }}
             >
               <Box
                 sx={{
-                  width: "70%",
+                  width: {
+                    md: "70%",
+                    xs: "100%",
+                  },
                   margin: "auto",
                 }}
               >
@@ -139,11 +164,18 @@ export const CreateReviewPage: FC = memo(() => {
             <Box
               sx={{
                 flex: "1 1 0",
+                margin: {
+                  md: "",
+                  xs: "auto",
+                },
               }}
             >
               <Box
                 sx={{
-                  width: "70%",
+                  width: {
+                    md: "70%",
+                    xs: "100%",
+                  },
                   margin: "auto",
                   textAlign: "center",
                 }}
@@ -161,14 +193,31 @@ export const CreateReviewPage: FC = memo(() => {
                     setRating(newRating);
                   }}
                   sx={{
-                    fontSize: "5rem",
                     marginTop: "2rem",
-                    "& .MuiRating-icon": {
-                      width: "5rem",
+                    "& label": {
+                      marginLeft: "2rem",
+                      "@media (max-width: 350px)": {
+                        marginLeft: "1rem",
+                      },
+                    },
+
+                    "& label:last-of-type": {
+                      marginLeft: 0,
+                      marginRight: "2rem",
+                      "@media (max-width: 350px)": {
+                        marginRight: "1rem",
+                      },
+                    },
+
+                    "& label span svg": {
+                      width: {
+                        lg: "45px",
+                        xs: "25px",
+                      },
                     },
                   }}
-                  icon={<FaStar size={50} />}
-                  emptyIcon={<FaRegStar size={50} />}
+                  icon={<FaStar />}
+                  emptyIcon={<FaRegStar />}
                 />
                 <CustomTextArea
                   sx={{

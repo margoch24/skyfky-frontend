@@ -1,4 +1,4 @@
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { FC, memo } from "react";
 import BlackLogo from "/assets/skyfly_black_logo.svg";
 import { DarkColor, MainColor, SubtitleColor } from "shared/constants/colors";
@@ -17,25 +17,28 @@ export const Footer: FC = memo(() => {
     <Container
       maxWidth="xl"
       sx={{
-        padding: "50px 0",
+        padding: {
+          sm: "50px 24px",
+          xs: "50px 16px",
+        },
       }}
     >
-      <Box
+      <Grid
         sx={{
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
-          marginBottom: "50px",
+          marginBottom: "3rem",
+        }}
+        container
+        columnSpacing={3}
+        rowSpacing={{
+          xs: 5,
+          md: 0,
         }}
       >
-        <Box
-          sx={{
-            maxWidth: "500px",
-          }}
-        >
+        <Grid item md={4} xs={12}>
           <Box
             sx={{
               height: "65px",
+              marginTop: "-2px",
             }}
           >
             <img src={BlackLogo} />
@@ -51,15 +54,14 @@ export const Footer: FC = memo(() => {
             Lorem Ipsum is simply dummy text of the printing and typesetting
             industry. Lorem Ipsum has been
           </Typography>
-        </Box>
-        <Box>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <Box
             sx={{
               width: "fit-content",
-              margin: "auto",
-              height: "100%",
-              display: "flex",
-              flexDirection: "column",
+              marginLeft: {
+                md: "auto",
+              },
             }}
           >
             <Typography
@@ -67,7 +69,10 @@ export const Footer: FC = memo(() => {
                 fontSize: "22px",
                 color: DarkColor,
                 fontFamily: TitleFont,
-                height: "65px",
+                height: {
+                  md: "65px",
+                  xs: "50px",
+                },
               }}
             >
               Contact Us
@@ -90,12 +95,14 @@ export const Footer: FC = memo(() => {
               }}
             />
           </Box>
-        </Box>
-        <Box>
+        </Grid>
+        <Grid item md={4} xs={12}>
           <Box
             sx={{
               width: "fit-content",
-              marginLeft: "auto",
+              marginLeft: {
+                md: "auto",
+              },
             }}
           >
             <Typography
@@ -103,7 +110,10 @@ export const Footer: FC = memo(() => {
                 fontSize: "22px",
                 color: DarkColor,
                 fontFamily: TitleFont,
-                height: "65px",
+                height: {
+                  md: "65px",
+                  xs: "50px",
+                },
               }}
             >
               Follow Us
@@ -125,8 +135,8 @@ export const Footer: FC = memo(() => {
               />
             </Box>
           </Box>
-        </Box>
-      </Box>
+        </Grid>
+      </Grid>
 
       <hr
         style={{
@@ -135,43 +145,63 @@ export const Footer: FC = memo(() => {
         }}
       />
 
-      <Box
+      <Grid
+        container
         sx={{
-          alignItems: "center",
-          display: "flex",
-          flexDirection: "row",
-          justifyContent: "space-between",
           marginTop: "30px",
+          justifyContent: {
+            md: "space-between",
+          },
+          flexDirection: {
+            md: "row",
+            xs: "column",
+          },
         }}
       >
-        <Typography
-          sx={{
-            fontSize: "18px",
-            color: DarkColor,
-            fontFamily: SubtitleFont,
-          }}
-        >
-          © 2024 SkyFly. All rights reserved
-        </Typography>
+        <Grid item>
+          <Typography
+            sx={{
+              fontSize: "18px",
+              color: DarkColor,
+              fontFamily: SubtitleFont,
+              marginTop: "-2px",
+            }}
+          >
+            © 2024 SkyFly. All rights reserved
+          </Typography>
+        </Grid>
 
-        <Box
+        <Grid
+          item
           sx={{
-            alignItems: "center",
-            display: "flex",
-            flexDirection: "row",
-            gap: "50px",
+            marginTop: {
+              xs: "30px",
+              md: 0,
+            },
           }}
         >
-          {FooterLinks.map(({ title, path }, index) => (
-            <CustomLink
-              color={DarkColor}
-              key={index}
-              path={path}
-              title={title}
-            />
-          ))}
-        </Box>
-      </Box>
+          <Grid
+            columnSpacing={8}
+            rowSpacing={2}
+            container
+            sx={{
+              justifyContent: {
+                md: "space-between",
+              },
+              flexDirection: {
+                md: "row",
+                xs: "column",
+              },
+            }}
+          >
+            {FooterLinks.map(({ title, path }, index) => (
+              <Grid key={index} item>
+                <CustomLink color={DarkColor} path={path} title={title} />
+              </Grid>
+            ))}
+          </Grid>
+        </Grid>
+      </Grid>
     </Container>
   );
 });

@@ -2,7 +2,7 @@ export type FlightType = {
   id: string;
   departure: number;
   arrival: number;
-  photo: string;
+  photo?: string;
   airline: string;
   cabin_class: string;
   scheduled: string;
@@ -21,6 +21,9 @@ export type FlightType = {
   score: number;
 
   is_deleted: boolean;
+
+  created_at?: number;
+  updated_at?: number;
 };
 
 export type SeatType = {

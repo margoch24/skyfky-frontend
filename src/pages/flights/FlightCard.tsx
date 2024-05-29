@@ -1,5 +1,5 @@
 import { FC, memo, useCallback, useState } from "react";
-import { Box, SxProps, Typography } from "@mui/material";
+import { Box, Grid, SxProps, Typography } from "@mui/material";
 import { FlightType } from "./types";
 import { getImageHelper } from "common/helpers/getImage";
 import FlightCardImg from "/assets/flights/flight_card_img.jpg";
@@ -78,8 +78,7 @@ export const FlightCard: FC<{
     <Box
       ref={lastCardRef}
       sx={{
-        width: "350px",
-        height: "550px",
+        maxWidth: "350px",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
         cursor: "pointer",
         ...sx,
@@ -90,7 +89,7 @@ export const FlightCard: FC<{
     >
       <Box
         sx={{
-          height: "40%",
+          height: "200px",
           width: "100%",
         }}
       >
@@ -103,49 +102,51 @@ export const FlightCard: FC<{
 
       <Box
         sx={{
-          margin: "25px 25px 0",
+          padding: "25px",
         }}
       >
-        <Box
+        <Grid
           sx={{
-            display: "flex",
-            flexDirection: "row",
-            alignItems: "center",
+            // display: "flex",
+            // flexDirection: "row",
+            // alignItems: "center",
+            justifyContent: "space-between",
             marginBottom: "20px",
           }}
+          spacing={0.2}
+          container
         >
-          <Typography
-            sx={{
-              fontFamily: SubtitleFont,
-              fontSize: "18px",
-              color: DarkColor,
-              opacity: "60%",
-              flex: "1 1 0",
-              minWidth: "fit-content",
-            }}
-          >
-            {fromCountry?.text_en?.toUpperCase()}
-          </Typography>
+          <Grid item>
+            <Typography
+              sx={{
+                fontFamily: SubtitleFont,
+                fontSize: "18px",
+                color: DarkColor,
+                opacity: "60%",
+                minWidth: "fit-content",
+              }}
+            >
+              {fromCountry?.text_en?.toUpperCase()}
+            </Typography>
+          </Grid>
 
-          <img
-            style={{ flex: "1 1 0" }}
-            height="30px"
-            width="30px"
-            src={FlightArrow}
-          />
+          <Grid item>
+            <img height="30px" width="30px" src={FlightArrow} />
+          </Grid>
 
-          <Typography
-            sx={{
-              fontFamily: SubtitleFont,
-              fontSize: "18px",
-              color: DarkColor,
-              flex: "1 1 0",
-              minWidth: "fit-content",
-            }}
-          >
-            {toCountry?.text_en?.toUpperCase()}
-          </Typography>
-        </Box>
+          <Grid item>
+            <Typography
+              sx={{
+                fontFamily: SubtitleFont,
+                fontSize: "18px",
+                color: DarkColor,
+                minWidth: "fit-content",
+              }}
+            >
+              {toCountry?.text_en?.toUpperCase()}
+            </Typography>
+          </Grid>
+        </Grid>
 
         <Box
           sx={{
@@ -181,6 +182,7 @@ export const FlightCard: FC<{
               flexDirection: "row",
               alignItems: "center",
               padding: "0 7px",
+              marginLeft: "10px",
             }}
           >
             <Typography

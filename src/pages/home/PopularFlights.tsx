@@ -54,23 +54,25 @@ export const PopularFlights: FC = memo(() => {
           Our popular <b>flights</b>
         </Typography>
 
-        <Box
-          sx={{
-            margin: "60px 0",
-          }}
-        >
-          <Carousel>
-            {flights?.map((flight) => (
-              <FlightCard
-                sx={{
-                  margin: "0 auto",
-                }}
-                flight={flight}
-                key={flight?.id}
-              />
-            ))}
-          </Carousel>
-        </Box>
+        {flights?.length > 0 && (
+          <Box
+            sx={{
+              margin: "60px 0",
+            }}
+          >
+            <Carousel>
+              {flights?.map((flight) => (
+                <FlightCard
+                  sx={{
+                    margin: "0 auto",
+                  }}
+                  flight={flight}
+                  key={flight?.id}
+                />
+              ))}
+            </Carousel>
+          </Box>
+        )}
 
         <CustomButton
           onClick={() => navigate(PagePath.Flights)}
