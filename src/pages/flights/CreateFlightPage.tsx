@@ -266,10 +266,11 @@ export const CreateFlightPage: FC = memo(() => {
   return (
     <>
       <Layout>
-        <LayoutImageBg bgImage={CreateFlightBg} height="100vh" minHeight={true}>
+        <LayoutImageBg bgImage={CreateFlightBg}>
           <Container
             sx={{
               height: "100%",
+              minHeight: "100vh",
               display: "flex",
               flexDirection: "column",
               justifyContent: "center",

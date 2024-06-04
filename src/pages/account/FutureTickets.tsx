@@ -91,6 +91,7 @@ export const FutureTickets: FC = memo(() => {
                     color: DarkColor,
                     marginTop: "5rem",
                     fontSize: "25px",
+                    textAlign: "center",
                   }}
                 >
                   No future tickets were found

@@ -15,6 +15,8 @@ export const Panel: FC<PanelProps> = memo(({ pageKey }) => {
   const navigate = useNavigate();
   const { isAdmin } = useUserContext();
   const PanelPages = isAdmin ? AdminAccountPanelPages : AccountPanelPages;
+  const [showMenu, setShowMenu] = useState<boolean>(false);
+  const [showPanel, setShowPanel] = useState<boolean>(false);
 
   const defaultPage = PanelPages.find((page) =>
     pageKey ? page.key === pageKey : page?.default
@@ -27,6 +29,24 @@ export const Panel: FC<PanelProps> = memo(({ pageKey }) => {
   const handleClick = (key: string) => {
     setCurrentPageKey(key);
     navigate(`${PagePath.Account}?pageKey=${key}`);
+  };
+
+  const handleShowMenuClick = () => {
+    setShowMenu(!showMenu);
+
+    if (showPanel) {
+      setShowPanel(!showPanel);
+      return;
+    }
+    setTimeout(() => {
+      setShowPanel(!showPanel);
+    }, 200);
+  };
+
+  const handlePanelButtonClick = (key: string) => {
+    handleClick(key);
+    setShowMenu(false);
+    setShowPanel(false);
   };
 
   useEffect(() => {
@@ -53,6 +73,10 @@ export const Panel: FC<PanelProps> = memo(({ pageKey }) => {
         currentPageKey={currentPageKey}
         PanelPages={PanelPages}
         handleClick={handleClick}
+        handlePanelButtonClick={handlePanelButtonClick}
+        handleShowMenuClick={handleShowMenuClick}
+        showMenu={showMenu}
+        showPanel={showPanel}
       />
 
       <Box
@@ -64,6 +88,7 @@ export const Panel: FC<PanelProps> = memo(({ pageKey }) => {
             xs: "5rem",
           },
         }}
+        onClick={showMenu ? handleShowMenuClick : () => {}}
       >
         <Box
           sx={{

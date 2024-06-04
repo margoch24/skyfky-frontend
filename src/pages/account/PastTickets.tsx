@@ -91,6 +91,7 @@ export const PastTickets: FC = memo(() => {
                     color: DarkColor,
                     marginTop: "5rem",
                     fontSize: "25px",
+                    textAlign: "center",
                   }}
                 >
                   No past tickets were found

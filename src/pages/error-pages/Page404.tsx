@@ -15,12 +15,17 @@ export const Page404: FC = memo(() => {
     <Layout>
       <Box
         sx={{
-          height: "700px",
+          minHeight: "700px",
           backgroundColor: DarkColor,
           justifyContent: "center",
           display: "flex",
           flexDirection: "column",
           textAlign: "center",
+          padding: "2rem",
+
+          "@media (max-width: 350px)": {
+            padding: "5rem 2rem 2rem",
+          },
         }}
       >
         <Typography

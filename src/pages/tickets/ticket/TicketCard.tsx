@@ -42,33 +42,57 @@ export const TicketCard: FC<TicketCardProps> = memo(
         sx={{
           minHeight: "400px",
           boxShadow: "4px 3px 10px rgba(0, 0, 0, 0.25)",
-          marginTop: "4rem",
           minWidth: {
             lg: "740px",
+          },
+          maxWidth: {
+            md: "inherit",
+            xs: "350px",
+          },
+          margin: {
+            md: "4rem auto auto",
+            xs: "4rem auto",
           },
         }}
       >
         <Box
           sx={{
-            display: "flex",
+            display: {
+              md: "flex",
+            },
           }}
         >
-          <img
-            height="200px"
-            width="330px"
-            src={
-              ticket?.flight?.photo
-                ? getImageHelper(ticket?.flight?.photo)
-                : FlightCardImg
-            }
-          />
+          <Box
+            sx={{
+              height: "200px",
+              minWidth: {
+                md: "330px",
+              },
+            }}
+          >
+            <img
+              height="100%"
+              width="100%"
+              src={
+                ticket?.flight?.photo
+                  ? getImageHelper(ticket?.flight?.photo)
+                  : FlightCardImg
+              }
+            />
+          </Box>
 
           <Box
             sx={{
               margin: "15px 20px",
               display: "flex",
               justifyContent: "space-between",
-              width: "100%",
+              width: {
+                md: "100%",
+              },
+
+              "@media (max-width: 345px)": {
+                flexDirection: "column-reverse",
+              },
             }}
           >
             <Box
@@ -252,7 +276,9 @@ export const TicketCard: FC<TicketCardProps> = memo(
         <Box
           sx={{
             padding: "0 20px",
-            display: "flex",
+            display: {
+              md: "flex",
+            },
             justifyContent: "space-between",
           }}
         >
@@ -267,91 +293,122 @@ export const TicketCard: FC<TicketCardProps> = memo(
 
         <Box
           sx={{
-            marginTop: "15px",
-            marginLeft: "20px",
-            display: "flex",
+            display: {
+              md: "flex",
+            },
+            justifyContent: "space-between",
+            padding: "20px",
+            alignItems: "end",
+            textAlign: {
+              md: "left",
+              xs: "center",
+            },
           }}
         >
-          <Box>
-            <Typography
-              sx={{
-                fontFamily: SubtitleFont,
-                color: DarkColor,
-                opacity: "30%",
-                fontSize: "16px",
-              }}
-            >
-              Airline
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: TitleFont,
-                fontSize: "22px",
-                color: DarkColor,
-                marginTop: "3px",
-              }}
-            >
-              {ticket?.flight?.airline}
-            </Typography>
-          </Box>
           <Box
             sx={{
-              marginLeft: "3rem",
-            }}
-          >
-            <Typography
-              sx={{
-                fontFamily: SubtitleFont,
-                color: DarkColor,
-                opacity: "30%",
-                fontSize: "16px",
-              }}
-            >
-              Seat
-            </Typography>
-            <Typography
-              sx={{
-                fontFamily: TitleFont,
-                fontSize: "22px",
-                color: DarkColor,
-                marginTop: "3px",
-              }}
-            >
-              {ticket?.seat?.row}
-              {ticket?.seat?.column}
-            </Typography>
-          </Box>
-        </Box>
+              display: "flex",
+              textAlign: "left",
 
-        <Box
-          sx={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "center",
-            padding: "25px 20px 15px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: TitleFont,
-              fontSize: "22px",
-              color: DarkColor,
+              "@media (max-width: 430px)": {
+                display: "block",
+              },
             }}
           >
-            <span
-              style={{
-                fontFamily: SubtitleFont,
-                color: DarkColor,
-                opacity: "40%",
-                fontSize: "16px",
-                marginRight: "10px",
+            <Box>
+              <Typography
+                sx={{
+                  fontFamily: SubtitleFont,
+                  color: DarkColor,
+                  opacity: "30%",
+                  fontSize: "16px",
+                }}
+              >
+                Total price:
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: TitleFont,
+                  fontSize: "22px",
+                  color: DarkColor,
+                  marginTop: "3px",
+                  width: "max-content",
+                }}
+              >
+                {ticket?.price} {currency}
+              </Typography>
+            </Box>
+
+            <Box
+              sx={{
+                marginLeft: "3rem",
+
+                "@media (max-width: 430px)": {
+                  marginLeft: 0,
+                },
               }}
             >
-              Total price:
-            </span>{" "}
-            {ticket?.price} {currency}
-          </Typography>
+              <Typography
+                sx={{
+                  fontFamily: SubtitleFont,
+                  color: DarkColor,
+                  opacity: "30%",
+                  fontSize: "16px",
+                }}
+              >
+                Airline
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: TitleFont,
+                  fontSize: "22px",
+                  color: DarkColor,
+                  marginTop: "3px",
+                }}
+              >
+                {ticket?.flight?.airline}
+              </Typography>
+            </Box>
+            <Box
+              sx={{
+                marginLeft: "3rem",
+
+                "@media (max-width: 430px)": {
+                  marginLeft: 0,
+                },
+              }}
+            >
+              <Typography
+                sx={{
+                  fontFamily: SubtitleFont,
+                  color: DarkColor,
+                  opacity: "30%",
+                  fontSize: "16px",
+                }}
+              >
+                Seat
+              </Typography>
+              <Typography
+                sx={{
+                  fontFamily: TitleFont,
+                  fontSize: "22px",
+                  color: DarkColor,
+                  marginTop: "3px",
+                }}
+              >
+                {ticket?.seat?.row}
+                {ticket?.seat?.column}
+              </Typography>
+            </Box>
+          </Box>
+
           <CustomButton
+            sx={{
+              marginTop: {
+                md: 0,
+                xs: "1rem",
+              },
+            }}
             onClick={handlePopupOpen}
             theme={ButtonTheme.Dark}
             title="Show ticket"

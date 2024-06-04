@@ -43,12 +43,21 @@ export const QrcodePopup: FC<QrcodePopupProps> = memo(
       <CustomPopup onClose={handlePopupClose} open={open}>
         <Box
           sx={{
-            width: "400px",
+            width: {
+              sm: "400px !important",
+            },
             height: "600px",
-            padding: "2rem",
+            padding: {
+              sm: "2rem",
+              xs: "1rem",
+            },
             backgroundColor: DarkColor,
             textAlign: "center",
             position: "relative",
+
+            "@media (min-width: 345px)": {
+              width: "270px",
+            },
           }}
         >
           <Typography
@@ -73,8 +82,14 @@ export const QrcodePopup: FC<QrcodePopupProps> = memo(
             sx={{
               textAlign: "center",
               position: "relative",
-              height: "280px",
-              width: "280px",
+              height: {
+                sm: "280px",
+                xs: "180px",
+              },
+              width: {
+                sm: "280px",
+                xs: "180px",
+              },
               display: "flex",
               justifyContent: "center",
               alignItems: "center",
@@ -86,7 +101,7 @@ export const QrcodePopup: FC<QrcodePopupProps> = memo(
               "&::before": {
                 content: '""',
                 position: "absolute",
-                width: "400px",
+                width: "150%",
                 height: "140%",
                 background: `linear-gradient(${
                   !isTickedValid ? "#d0312d, #990f02" : "#00ccff, #d500f9"
@@ -106,15 +121,26 @@ export const QrcodePopup: FC<QrcodePopupProps> = memo(
               },
             }}
           >
-            <img
-              height="250px"
-              width="250px"
-              style={{
+            <Box
+              sx={{
+                height: {
+                  sm: "250px",
+                  xs: "150px",
+                },
+                width: {
+                  sm: "250px",
+                  xs: "150px",
+                },
                 zIndex: 2,
                 position: "inherit",
               }}
-              src={getImageHelper(qrcode, true)}
-            />
+            >
+              <img
+                height="100%"
+                width="100%"
+                src={getImageHelper(qrcode, true)}
+              />
+            </Box>
           </Box>
 
           <Divider

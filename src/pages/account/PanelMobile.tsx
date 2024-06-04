@@ -1,5 +1,5 @@
 import { Box, Button } from "@mui/material";
-import { FC, memo, useState } from "react";
+import { FC, memo } from "react";
 import AuthBg from "/assets/authenticate/auth_bg.png";
 import { TitleFont } from "shared/constants/fonts";
 import { DarkBlue } from "shared/constants/colors";
@@ -10,36 +10,27 @@ interface PanelMobileProps {
   currentPageKey?: string;
   handleClick: (key: string) => void;
   PanelPages: AccountPanelPageType[];
+  onMenuChange?: (value: boolean) => void;
+  showMenu: boolean;
+  handleShowMenuClick: () => void;
+  showPanel: boolean;
+  handlePanelButtonClick: (key: string) => void;
 }
 
 export const PanelMobile: FC<PanelMobileProps> = memo(
-  ({ currentPageKey, handleClick, PanelPages }) => {
-    const [showMenu, setShowMenu] = useState<boolean>(false);
-    const [showPanel, setShowPanel] = useState<boolean>(false);
-
-    const handleShowMenuClick = () => {
-      setShowMenu(!showMenu);
-
-      if (showPanel) {
-        setShowPanel(!showPanel);
-      } else {
-        setTimeout(() => {
-          setShowPanel(!showPanel);
-        }, 200);
-      }
-    };
-
-    const handlePanelButtonClick = (key: string) => {
-      handleClick(key);
-      setShowMenu(false);
-      setShowPanel(false);
-    };
-
+  ({
+    currentPageKey,
+    PanelPages,
+    showMenu,
+    handleShowMenuClick,
+    showPanel,
+    handlePanelButtonClick,
+  }) => {
     return (
       <Box
         sx={{
           ...(showMenu
-            ? { minWidth: "230px", width: "350px" }
+            ? { minWidth: "230px", width: "230px" }
             : { minWidth: "50px", width: "50px" }),
           backgroundImage: `url(${AuthBg})`,
           backgroundPosition: "center",

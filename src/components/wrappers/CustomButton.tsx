@@ -24,8 +24,9 @@ export const CustomButton: FC<{
         fontSize: "18px",
         textTransform: "none",
         fontFamily: SubtitleFont,
-        height: "45px",
+        minHeight: "45px",
         boxShadow: "none",
+
         ...buttonSx,
       }}
       onClick={onClick}
