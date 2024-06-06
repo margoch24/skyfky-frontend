@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect } from "react";
+import { FC, memo, useCallback, useEffect, useRef } from "react";
 import { Layout } from "components/layout/Layout";
 import { Box, Grid, Typography } from "@mui/material";
 import AirplineWingBg from "/assets/airplane_wing_bg.png";
@@ -28,12 +28,18 @@ export const FlightsPage: FC = memo(() => {
   const { isAdmin } = useUserContext();
   const { setQuery, query } = useQueryContext();
   const navigate = useNavigate();
+  const isPageLoaded = useRef(false);
+
+  useEffect(() => {
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
+  });
 
   const fetchFunc = useCallback(
     async (pageParam: unknown) => {
-      if (pageParam === 0) {
-        window.scrollTo(0, 0);
-      }
       const preparedQuery = prepareQuery(query);
       const params = {
         ...preparedQuery,
@@ -82,8 +88,11 @@ export const FlightsPage: FC = memo(() => {
           backgroundPosition: "top",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          height: "350px",
+          minHeight: "350px",
           position: "relative",
+          display: "flex",
+          flexDirection: "column",
+          justifyContent: "end",
         }}
       >
         <TopFilters />
@@ -91,16 +100,25 @@ export const FlightsPage: FC = memo(() => {
 
       <Box
         sx={{
-          display: "flex",
+          display: {
+            lg: "flex",
+            xs: "block",
+          },
           minHeight: "100vh",
-          width: "1576px",
           maxWidth: "1576px",
           margin: "5rem auto",
+          width: "94%",
+          paddingLeft: {
+            lg: "10px",
+          },
         }}
       >
         <Box
           sx={{
-            width: "25%",
+            width: {
+              lg: "21%",
+              xs: "100%",
+            },
             textAlign: "center",
           }}
         >
@@ -110,7 +128,10 @@ export const FlightsPage: FC = memo(() => {
             sx={{
               display: "flex",
               flexDirection: "column",
-              width: "70%",
+              width: {
+                lg: "70%",
+                xs: "100%",
+              },
               margin: "auto",
             }}
           >
@@ -118,6 +139,14 @@ export const FlightsPage: FC = memo(() => {
               onClick={handleResetAll}
               sx={{
                 marginTop: "3rem",
+                width: {
+                  lg: "auto",
+                  xs: "fit-content",
+                },
+                margin: {
+                  lg: "2rem 0",
+                  xs: "2rem 0 2rem auto",
+                },
               }}
               title="Reset all"
               theme={ButtonTheme.Transparent}
@@ -137,10 +166,16 @@ export const FlightsPage: FC = memo(() => {
         </Box>
         <Box
           sx={{
-            width: "75%",
-            height: "1200px",
+            width: {
+              lg: "79%",
+              xs: "100%",
+            },
             overflow: "auto",
-            padding: "0 10px 10px",
+            padding: {
+              lg: "0 10px 10px",
+              xs: "0 10px 10px 0",
+            },
+            marginLeft: "-7px",
             "&::-webkit-scrollbar": {
               display: "none",
             },
@@ -153,7 +188,8 @@ export const FlightsPage: FC = memo(() => {
               width: "100%",
             }}
             container
-            spacing={4}
+            rowSpacing={4}
+            columnSpacing={2}
           >
             {isLoading ? (
               <Box
@@ -191,14 +227,25 @@ export const FlightsPage: FC = memo(() => {
                     index === pageRecordsAmount - 1
                   ) {
                     return (
-                      <Grid key={flight?.id} item xs={4}>
-                        <FlightCard lastCardRef={ref} flight={flight} />
+                      <Grid key={flight?.id} item md={4} sm={6} xs={12}>
+                        <FlightCard
+                          sx={{
+                            margin: "0 auto",
+                          }}
+                          lastCardRef={ref}
+                          flight={flight}
+                        />
                       </Grid>
                     );
                   }
                   return (
-                    <Grid key={flight?.id} item xs={4}>
-                      <FlightCard flight={flight} />
+                    <Grid key={flight?.id} item md={4} sm={6} xs={12}>
+                      <FlightCard
+                        sx={{
+                          margin: "0 auto",
+                        }}
+                        flight={flight}
+                      />
                     </Grid>
                   );
                 });

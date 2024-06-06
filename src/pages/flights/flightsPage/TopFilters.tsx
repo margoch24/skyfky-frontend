@@ -91,206 +91,271 @@ export const TopFilters: FC = memo(() => {
     setQuery((prevQuery) => ({ ...prevQuery, ...params }));
   };
   return (
-    <Box
-      sx={{
-        maxHeight: "200px",
-        width: "1536px",
-        background: "rgba(33, 41, 64, 0.5)",
-        position: "absolute",
-        bottom: 0,
-        left: "50%",
-        transform: "translateX(-50%)",
-        padding: "20px",
-        zIndex: 9,
-      }}
-    >
+    <Box>
       <Box
         sx={{
-          display: "flex",
+          maxHeight: {
+            lg: "200px",
+            xs: "auto",
+          },
+          width: "90%",
+          maxWidth: "1536px",
+          background: "rgba(33, 41, 64, 0.5)",
+          bottom: 0,
+          padding: "20px",
+          zIndex: 9,
+          margin: {
+            lg: "0 auto",
+            xs: "10rem auto 0",
+          },
+
+          "@media (max-width: 400px)": {
+            padding: "5%",
+          },
         }}
       >
         <Box
           sx={{
-            flex: "1 1 0",
-            marginRight: "20px",
-            borderRight: "1px solid white",
-            paddingRight: "20px",
+            display: {
+              lg: "flex",
+              xs: "block",
+            },
           }}
         >
-          <Typography
-            sx={{
-              fontFamily: TitleFont,
-              color: "white",
-              fontWeight: 600,
-              fontSize: "24px",
-            }}
-          >
-            Destination
-          </Typography>
-
           <Box
             sx={{
-              display: "flex",
-              marginTop: "2rem",
-              justifyContent: "space-between",
+              flex: "1 1 0",
+              marginRight: {
+                lg: "20px",
+              },
+              borderRight: {
+                lg: "1px solid white",
+              },
+              paddingRight: {
+                lg: "20px",
+              },
             }}
           >
-            <PlacesSearchAutocomplete
-              label="From"
+            <Typography
               sx={{
-                minWidth: "220px",
-
-                "& .MuiFormControl-root": {
-                  padding: "2px 0",
-                },
+                fontFamily: TitleFont,
+                color: "white",
+                fontWeight: 600,
+                fontSize: "24px",
               }}
-              onChange={(newFrom) => setFrom(newFrom as MapboxPlaceType)}
-              onInputChange={(newInputFrom) => setFromInput(newInputFrom)}
-              value={from}
-              inputValue={fromInput}
-            />
+            >
+              Destination
+            </Typography>
 
-            <PlacesSearchAutocomplete
-              label="To"
-              sx={{
-                minWidth: "220px",
-
-                "& .MuiFormControl-root": {
-                  padding: "2px 0",
-                },
-              }}
-              onChange={(newTo) => setTo(newTo as MapboxPlaceType)}
-              onInputChange={(newInputTo) => setToInput(newInputTo)}
-              value={to}
-              inputValue={toInput}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            flex: "1 1 0",
-            marginRight: "20px",
-            borderRight: "1px solid white",
-            paddingRight: "20px",
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: TitleFont,
-              color: "white",
-              fontWeight: 600,
-              fontSize: "24px",
-            }}
-          >
-            Date
-          </Typography>
-
-          <Box
-            sx={{
-              display: "flex",
-              marginTop: "2rem",
-              justifyContent: "space-between",
-            }}
-          >
-            <CustomDateTimePicker
-              sx={{
-                maxWidth: "220px",
-              }}
-              label="Departure"
-              onChange={(newDeparture) => setDeparture(newDeparture)}
-              value={departure}
-            />
-
-            <CustomDateTimePicker
-              sx={{
-                maxWidth: "220px",
-              }}
-              label="Arrival"
-              onChange={(newArrival) => setArrival(newArrival)}
-              value={arrival}
-            />
-          </Box>
-        </Box>
-        <Box
-          sx={{
-            flex: "1 1 0",
-          }}
-        >
-          <Typography
-            sx={{
-              fontFamily: TitleFont,
-              color: "white",
-              fontWeight: 600,
-              fontSize: "24px",
-            }}
-          >
-            Passengers
-          </Typography>
-
-          <Box
-            sx={{
-              display: "flex",
-              marginTop: "0.7rem",
-              justifyContent: "space-between",
-              alignItems: "end",
-            }}
-          >
             <Box
               sx={{
                 display: "flex",
+                marginTop: {
+                  lg: "2rem",
+                },
+                marginBottom: {
+                  lg: 0,
+                  xs: "2rem",
+                },
                 justifyContent: "space-between",
               }}
             >
-              <Box>
-                <Typography
-                  sx={{
-                    fontFamily: SubtitleFont,
-                    fontSize: "16px",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  Adults
-                </Typography>
-                <CustomNumberInput
-                  placeholder={String(adultAmount)}
-                  value={adultAmount}
-                  //   max={Math.floor(minAmountOfPassengers / 2)}
-                  min={1}
-                  onChange={(value) => setAdultAmount(value)}
-                  //   sx={{
-                  //     color: ""
-                  //   }}
-                  //   onDecrease={() => removeLastPassenger(PassengerType.Adult)}
+              <Box
+                sx={{
+                  "& .MuiFormControl-root": {
+                    padding: "2px 0",
+                  },
+                  flex: "1 1 0",
+                  marginRight: "1rem",
+                }}
+              >
+                <PlacesSearchAutocomplete
+                  label="From"
+                  onChange={(newFrom) => setFrom(newFrom as MapboxPlaceType)}
+                  onInputChange={(newInputFrom) => setFromInput(newInputFrom)}
+                  value={from}
+                  inputValue={fromInput}
                 />
               </Box>
 
-              <Box>
-                <Typography
-                  sx={{
-                    fontFamily: SubtitleFont,
-                    fontSize: "16px",
-                    color: "white",
-                    textAlign: "center",
-                  }}
-                >
-                  Children
-                </Typography>
-                <CustomNumberInput
-                  placeholder={String(childAmount)}
-                  value={childAmount}
-                  //   max={Math.floor(minAmountOfPassengers / 2)}
-                  onChange={(value) => setChildAmount(value)}
-                  // onDecrease={() => removeLastPassenger(PassengerType.Child)}
+              <Box
+                sx={{
+                  "& .MuiFormControl-root": {
+                    padding: "2px 0",
+                  },
+                  flex: "1 1 0",
+                }}
+              >
+                <PlacesSearchAutocomplete
+                  label="To"
+                  onChange={(newTo) => setTo(newTo as MapboxPlaceType)}
+                  onInputChange={(newInputTo) => setToInput(newInputTo)}
+                  value={to}
+                  inputValue={toInput}
                 />
               </Box>
             </Box>
+          </Box>
+          <Box
+            sx={{
+              flex: "1 1 0",
+              marginRight: {
+                lg: "20px",
+              },
+              borderRight: {
+                lg: "1px solid white",
+              },
+              paddingRight: {
+                lg: "20px",
+              },
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily: TitleFont,
+                color: "white",
+                fontWeight: 600,
+                fontSize: "24px",
+              }}
+            >
+              Date
+            </Typography>
 
-            <CustomButton
-              onClick={handleSearch}
-              title="Search"
-              theme={ButtonTheme.Dark}
-            />
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: {
+                  lg: "2rem",
+                },
+                marginBottom: {
+                  lg: 0,
+                  xs: "2rem",
+                },
+                justifyContent: "space-between",
+              }}
+            >
+              <Box
+                sx={{
+                  flex: "1 1 0",
+                  marginRight: "1rem",
+                }}
+              >
+                <CustomDateTimePicker
+                  label="Departure"
+                  onChange={(newDeparture) => setDeparture(newDeparture)}
+                  value={departure}
+                />
+              </Box>
+
+              <Box
+                sx={{
+                  flex: "1 1 0",
+                }}
+              >
+                <CustomDateTimePicker
+                  label="Arrival"
+                  onChange={(newArrival) => setArrival(newArrival)}
+                  value={arrival}
+                />
+              </Box>
+            </Box>
+          </Box>
+          <Box
+            sx={{
+              flex: "1 1 0",
+            }}
+          >
+            <Typography
+              sx={{
+                fontFamily: TitleFont,
+                color: "white",
+                fontWeight: 600,
+                fontSize: "24px",
+              }}
+            >
+              Passengers
+            </Typography>
+
+            <Box
+              sx={{
+                display: "flex",
+                marginTop: "0.7rem",
+                justifyContent: "space-between",
+                alignItems: "end",
+
+                "@media (max-width: 500px)": {
+                  display: "block",
+                  textAlign: "center",
+                },
+              }}
+            >
+              <Box
+                sx={{
+                  display: "flex",
+                  justifyContent: "space-between",
+
+                  "@media (max-width: 310px)": {
+                    display: "block",
+                    margin: "0 auto",
+                    width: "fit-content",
+                  },
+                }}
+              >
+                <Box>
+                  <Typography
+                    sx={{
+                      fontFamily: SubtitleFont,
+                      fontSize: "16px",
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                  >
+                    Adults
+                  </Typography>
+                  <CustomNumberInput
+                    placeholder={String(adultAmount)}
+                    value={adultAmount}
+                    min={1}
+                    onChange={(value) => setAdultAmount(value)}
+                  />
+                </Box>
+
+                <Box
+                  sx={{
+                    "@media (max-width: 310px)": {
+                      marginTop: "1rem",
+                    },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontFamily: SubtitleFont,
+                      fontSize: "16px",
+                      color: "white",
+                      textAlign: "center",
+                    }}
+                  >
+                    Children
+                  </Typography>
+                  <CustomNumberInput
+                    placeholder={String(childAmount)}
+                    value={childAmount}
+                    onChange={(value) => setChildAmount(value)}
+                  />
+                </Box>
+              </Box>
+
+              <CustomButton
+                sx={{
+                  "@media (max-width: 500px)": {
+                    marginTop: "2rem",
+                  },
+                }}
+                onClick={handleSearch}
+                title="Search"
+                theme={ButtonTheme.Dark}
+              />
+            </Box>
           </Box>
         </Box>
       </Box>

@@ -105,52 +105,5 @@ export const HeaderMobile: FC<HeaderMobileProps> = memo(({ showMenu }) => {
         </Link>
       )}
     </Box>
-    // <Box
-    //   sx={{
-    //     alignItems: "center",
-    //     display: {
-    //       md: "flex",
-    //       xs: "none",
-    //     },
-    //     flexDirection: "row",
-    //     gap: "50px",
-    //   }}
-    // >
-    //   {HeaderLinks.map(({ title, path }, index) => (
-    //     <CustomLink color="#ffff" key={index} path={path} title={title} />
-    //   ))}
-
-    //   {!authPaths.includes(pathname) && !user?.id && (
-    //     <CustomButton
-    //       onClick={() => navigate(PagePath.Login)}
-    //       title="Login"
-    //       theme={ButtonTheme.Light}
-    //     />
-    //   )}
-
-    //   {user?.id && (
-    //     <Box
-    //       sx={{
-    //         width: "50px",
-    //         height: "50px",
-    //         overflow: "hidden",
-    //         borderRadius: "50px",
-    //         border: "2px solid white",
-    //       }}
-    //     >
-    //       <Link
-    //         to={`${PagePath.Account}?pageKey=${AccountPanelPagesKeys.Profile}`}
-    //       >
-    //         <img
-    //           height="100%"
-    //           width="100%"
-    //           src={
-    //             user?.photo ? getImageHelper(user?.photo) : DefaultProfilePhoto
-    //           }
-    //         />
-    //       </Link>
-    //     </Box>
-    //   )}
-    // </Box>
   );
 });

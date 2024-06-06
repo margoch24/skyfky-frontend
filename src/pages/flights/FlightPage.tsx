@@ -202,7 +202,7 @@ export const FlightPage: FC = memo(() => {
                 },
               }}
               container
-              spacing={5}
+              columnSpacing={5}
             >
               <Grid item>
                 <DatesComponent flight={flight} />

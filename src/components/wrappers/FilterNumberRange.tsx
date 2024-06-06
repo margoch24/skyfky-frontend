@@ -119,7 +119,6 @@ export const FilterNumberRange: FC<FiltersBlockProps> = memo(
           minValue={minValue}
           maxValue={maxValue}
           onChange={handleSliderChange}
-          // onChange={handleSliderChange}
           step={step}
         />
 

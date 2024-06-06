@@ -78,6 +78,8 @@ export const FlightCard: FC<{
     <Box
       ref={lastCardRef}
       sx={{
+        position: "relative",
+        height: "100%",
         maxWidth: "350px",
         boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
         cursor: "pointer",
@@ -107,9 +109,6 @@ export const FlightCard: FC<{
       >
         <Grid
           sx={{
-            // display: "flex",
-            // flexDirection: "row",
-            // alignItems: "center",
             justifyContent: "space-between",
             marginBottom: "20px",
           }}
@@ -130,7 +129,12 @@ export const FlightCard: FC<{
             </Typography>
           </Grid>
 
-          <Grid item>
+          <Grid
+            item
+            sx={{
+              margin: "0 5px",
+            }}
+          >
             <img height="30px" width="30px" src={FlightArrow} />
           </Grid>
 
@@ -294,6 +298,7 @@ export const FlightCard: FC<{
             fontWeight: "600",
             marginTop: "7px",
             textAlign: "center",
+            marginBottom: "1rem",
           }}
         >
           {flight.price} {CurrencyToSign[flight.currency]}
@@ -305,6 +310,10 @@ export const FlightCard: FC<{
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
+            position: "absolute",
+            bottom: "10px",
+            transform: "translateX(-50%)",
+            left: "50%",
           }}
         >
           <Typography
@@ -313,6 +322,7 @@ export const FlightCard: FC<{
               fontSize: "18px",
               color: DarkColor,
               marginRight: "20px",
+              width: "max-content",
             }}
           >
             Detailed view
