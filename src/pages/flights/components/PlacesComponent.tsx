@@ -52,9 +52,12 @@ export const PlacesComponent: FC<PlacesComponentProps> = memo(({ flight }) => {
     <Box
       sx={{
         height: "fit-content",
-        width: "650px",
+        maxWidth: "650px",
         marginLeft: "auto",
-        marginRight: "2rem",
+        marginRight: {
+          md: "inherit",
+          xs: "auto",
+        },
       }}
     >
       <Typography

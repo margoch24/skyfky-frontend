@@ -6,7 +6,7 @@ import { PassengerInfoType } from "../types";
 import { FlightType } from "pages/flights/types";
 import { capitalizeFirstLetter } from "common/helpers";
 import { DatesComponent } from "./DatesComponent";
-import { PlacesComponent } from "./PlacesComponent";
+import { ChekoutPlacesComponent } from "./ChekoutPlacesComponent";
 import { IoAirplaneSharp } from "react-icons/io5";
 import { DiscountType } from "common/types";
 
@@ -116,7 +116,7 @@ export const PassengerFinalCard: FC<PassengerFinalCardProps> = memo(
           </Typography>
         )}
 
-        <PlacesComponent flight={flight} />
+        <ChekoutPlacesComponent flight={flight} />
         <DatesComponent flight={flight} />
 
         <Typography

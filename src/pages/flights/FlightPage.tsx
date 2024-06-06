@@ -7,7 +7,7 @@ import { ResponseData } from "common/types";
 import { Layout } from "components/layout/Layout";
 import { FC, memo, useCallback, useEffect, useState } from "react";
 import { FlightType, SeatType } from "./types";
-import { Box, Container, Typography } from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
 import { getImageHelper } from "common/helpers/getImage";
 import FlightCardImg from "/assets/flights/flight_card_img.jpg";
 import { DarkColor } from "shared/constants/colors";
@@ -86,7 +86,7 @@ export const FlightPage: FC = memo(() => {
       <Box
         sx={{
           width: "100%",
-          height: "300px",
+          minHeight: "300px",
           backgroundColor: DarkColor,
         }}
       >
@@ -98,6 +98,7 @@ export const FlightPage: FC = memo(() => {
             flexDirection: "column",
             alignItems: "flex-end",
             justifyContent: "center",
+            minHeight: "300px",
           }}
         >
           <Typography
@@ -105,7 +106,15 @@ export const FlightPage: FC = memo(() => {
               color: "white",
               fontSize: "48px",
               fontFamily: SecondTitleFont,
-              marginTop: "4rem",
+              marginTop: {
+                sm: "4rem",
+                xs: "6rem",
+              },
+              marginBottom: {
+                sm: 0,
+                xs: "3rem",
+              },
+              marginRight: "5px",
             }}
           >
             Fly with Freedom and Comfort
@@ -132,16 +141,25 @@ export const FlightPage: FC = memo(() => {
           <Box>
             <Box
               sx={{
-                display: "flex",
+                display: {
+                  md: "flex",
+                  xs: "block",
+                },
                 flexDirection: "row",
                 alignItems: "center",
               }}
             >
               <Box
                 sx={{
-                  height: "450px",
-                  minWidth: "650px",
-                  marginTop: "-5rem",
+                  height: {
+                    sm: "450px",
+                  },
+                  maxWidth: "650px",
+                  margin: {
+                    md: "-4rem 0 0",
+                    xs: "2rem auto",
+                  },
+                  flex: "1 1 0",
                 }}
               >
                 <img
@@ -150,6 +168,7 @@ export const FlightPage: FC = memo(() => {
                   style={{
                     borderRadius: "20px",
                     boxShadow: "0px 4px 8px rgba(0, 0, 0, 0.25)",
+                    minHeight: "200px",
                   }}
                   src={
                     flight?.photo
@@ -162,76 +181,34 @@ export const FlightPage: FC = memo(() => {
               <Box
                 sx={{
                   width: "100%",
+                  flex: "1 1 0",
+                  paddingLeft: {
+                    md: "2rem",
+                  },
+                  paddingTop: "1rem",
                 }}
               >
                 <PlacesComponent flight={flight} />
               </Box>
             </Box>
 
-            <Box
+            <Grid
               sx={{
-                display: "flex",
-                flexDirection: "row",
-                alignItems: "center",
                 justifyContent: "space-between",
                 marginTop: "20px",
+                "@media (max-width: 550px)": {
+                  flexDirection: "column",
+                  textAlign: "center",
+                },
               }}
+              container
+              spacing={5}
             >
-              <DatesComponent flight={flight} />
+              <Grid item>
+                <DatesComponent flight={flight} />
+              </Grid>
 
-              <Box>
-                <Typography
-                  sx={{
-                    fontSize: "20px",
-                    fontFamily: SubtitleFont,
-                    opacity: "60%",
-                    color: DarkColor,
-                    marginTop: "40px",
-                  }}
-                >
-                  Airline
-                </Typography>
-                <Typography
-                  sx={{
-                    fontFamily: SubtitleFont,
-                    color: DarkColor,
-                    fontSize: "28px",
-                  }}
-                >
-                  {flight?.airline}
-                </Typography>
-
-                <Typography
-                  sx={{
-                    fontSize: "20px",
-                    fontFamily: SubtitleFont,
-                    opacity: "60%",
-                    color: DarkColor,
-                    marginTop: "40px",
-                  }}
-                >
-                  Class
-                </Typography>
-                <Box
-                  sx={{
-                    border: `1px solid ${cabinClassColor}`,
-                    padding: "5px 10px 0",
-                    textAlign: "center",
-                  }}
-                >
-                  <Typography
-                    sx={{
-                      fontFamily: TitleFont,
-                      color: cabinClassColor,
-                      fontSize: "20px",
-                    }}
-                  >
-                    {capitalizeFirstLetter(flight?.cabin_class || "none")}
-                  </Typography>
-                </Box>
-              </Box>
-
-              <Box>
+              <Grid item>
                 <Typography
                   sx={{
                     fontSize: "20px",
@@ -273,10 +250,74 @@ export const FlightPage: FC = memo(() => {
                 >
                   {((flight?.available_seats as SeatType[]) ?? []).length}
                 </Typography>
-              </Box>
+              </Grid>
 
-              <PricesComponent flight={flight} />
-            </Box>
+              <Grid item>
+                <Box
+                  sx={{
+                    width: "fit-content",
+
+                    "@media (max-width: 550px)": {
+                      margin: "auto",
+                    },
+                  }}
+                >
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontFamily: SubtitleFont,
+                      opacity: "60%",
+                      color: DarkColor,
+                      marginTop: "40px",
+                    }}
+                  >
+                    Airline
+                  </Typography>
+                  <Typography
+                    sx={{
+                      fontFamily: SubtitleFont,
+                      color: DarkColor,
+                      fontSize: "28px",
+                    }}
+                  >
+                    {flight?.airline}
+                  </Typography>
+
+                  <Typography
+                    sx={{
+                      fontSize: "20px",
+                      fontFamily: SubtitleFont,
+                      opacity: "60%",
+                      color: DarkColor,
+                      marginTop: "40px",
+                    }}
+                  >
+                    Class
+                  </Typography>
+                  <Box
+                    sx={{
+                      border: `1px solid ${cabinClassColor}`,
+                      padding: "5px 10px 0",
+                      textAlign: "center",
+                    }}
+                  >
+                    <Typography
+                      sx={{
+                        fontFamily: TitleFont,
+                        color: cabinClassColor,
+                        fontSize: "20px",
+                      }}
+                    >
+                      {capitalizeFirstLetter(flight?.cabin_class || "none")}
+                    </Typography>
+                  </Box>
+                </Box>
+              </Grid>
+
+              <Grid item>
+                <PricesComponent flight={flight} />
+              </Grid>
+            </Grid>
 
             <Box
               sx={{

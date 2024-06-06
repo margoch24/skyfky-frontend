@@ -278,12 +278,18 @@ export const CreateFlightPage: FC = memo(() => {
           >
             <Box
               sx={{
-                width: "50%",
+                width: {
+                  md: "50%",
+                  xs: "80%",
+                },
                 margin: "auto",
                 display: "flex",
                 flexDirection: "column",
                 textAlign: "center",
-                paddingTop: "5rem",
+                padding: {
+                  md: "5rem 0rem",
+                  xs: "8rem 0rem 5rem",
+                },
               }}
             >
               <PlacesSearchAutocomplete
@@ -320,6 +326,10 @@ export const CreateFlightPage: FC = memo(() => {
                   alignItems: "baseline",
                   justifyContent: "space-between",
                   marginTop: "30px",
+
+                  "@media (max-width: 445px)": {
+                    display: "block",
+                  },
                 }}
               >
                 <Box sx={{ flex: "1 1 0" }}>
@@ -334,7 +344,16 @@ export const CreateFlightPage: FC = memo(() => {
                     value={departure}
                   />
                 </Box>
-                <Box sx={{ flex: "1 1 0", marginLeft: "25px" }}>
+                <Box
+                  sx={{
+                    flex: "1 1 0",
+                    marginLeft: "25px",
+                    "@media (max-width: 445px)": {
+                      marginLeft: 0,
+                      marginTop: "25px",
+                    },
+                  }}
+                >
                   <CustomDateTimePicker
                     label="Arrival*"
                     onFocus={() => {
@@ -354,6 +373,10 @@ export const CreateFlightPage: FC = memo(() => {
                   alignItems: "baseline",
                   justifyContent: "space-between",
                   marginTop: "30px",
+
+                  "@media (max-width: 445px)": {
+                    display: "block",
+                  },
                 }}
               >
                 <Box sx={{ flex: "1 1 0" }}>
@@ -369,7 +392,16 @@ export const CreateFlightPage: FC = memo(() => {
                     value={String(price)}
                   />
                 </Box>
-                <Box sx={{ flex: "1 1 0", marginLeft: "25px" }}>
+                <Box
+                  sx={{
+                    flex: "1 1 0",
+                    marginLeft: "25px",
+                    "@media (max-width: 445px)": {
+                      marginLeft: 0,
+                      marginTop: "25px",
+                    },
+                  }}
+                >
                   <CustomSelect
                     sx={{
                       display: "flex",
@@ -389,6 +421,10 @@ export const CreateFlightPage: FC = memo(() => {
                   alignItems: "baseline",
                   justifyContent: "space-between",
                   marginTop: "30px",
+
+                  "@media (max-width: 445px)": {
+                    display: "block",
+                  },
                 }}
               >
                 <Box sx={{ flex: "1 1 0" }}>
@@ -409,7 +445,16 @@ export const CreateFlightPage: FC = memo(() => {
                     value={cabinClass}
                   />
                 </Box>
-                <Box sx={{ flex: "1 1 0", marginLeft: "25px" }}>
+                <Box
+                  sx={{
+                    flex: "1 1 0",
+                    marginLeft: "25px",
+                    "@media (max-width: 445px)": {
+                      marginLeft: 0,
+                      marginTop: "25px",
+                    },
+                  }}
+                >
                   <CustomSelect
                     placeholder="Scheduled*"
                     sx={{

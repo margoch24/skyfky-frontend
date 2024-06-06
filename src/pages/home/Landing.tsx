@@ -155,7 +155,7 @@ export const Landing: FC = memo(() => {
               <PlacesSearchAutocomplete
                 sx={{
                   "& .MuiFormControl-root": {
-                    padding: "2px 5px 2px 0",
+                    padding: "2px 0px 2px 0",
                   },
                 }}
                 label="From"
@@ -170,7 +170,7 @@ export const Landing: FC = memo(() => {
               <PlacesSearchAutocomplete
                 sx={{
                   "& .MuiFormControl-root": {
-                    padding: "2px 5px 2px 0",
+                    padding: "2px 0px 2px 0",
                   },
                 }}
                 label="To"

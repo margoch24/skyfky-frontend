@@ -47,7 +47,6 @@ export const CustomDateTimePicker: FC<CustomDateTimePickerProps> = memo(
             border: "2px solid #F5F5F5",
 
             height: "45px",
-            width: "100%",
             "&.Mui-focused": {
               border: "none",
             },
