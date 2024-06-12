@@ -14,6 +14,10 @@ import { FlightsPage } from "pages/flights/flightsPage/FlightsPage";
 import { CreateReviewPage } from "pages/reviews/CreateReviewPage";
 import { CheckTicketPage } from "pages/tickets/CheckTicketPage";
 import { RequireAuth } from "components/wrappers/RequireAuth";
+import { ContactUsPage } from "pages/contact_us/ContactUsPage";
+import { PrivacyPolicyPage } from "pages/privacy_policy/PrivacyPolicyPage";
+import { TermsConditionsPage } from "pages/terms_conditions/TermsConditionsPage";
+import { AboutPage } from "pages/about/AboutPage";
 
 export const Router: FC = memo(() => {
   return (
@@ -23,6 +27,15 @@ export const Router: FC = memo(() => {
         <Route path={PagePath.Home} element={<HomePage />} />
         <Route path={PagePath.Login} element={<LoginPage />} />
         <Route path={PagePath.Register} element={<RegisterPage />} />
+        <Route path={PagePath.Flight} element={<FlightPage />} />
+        <Route path={PagePath.Flights} element={<FlightsPage />} />
+        <Route path={PagePath.ContactUs} element={<ContactUsPage />} />
+        <Route path={PagePath.PrivacyPolicy} element={<PrivacyPolicyPage />} />
+        <Route
+          path={PagePath.TermsConditions}
+          element={<TermsConditionsPage />}
+        />
+        <Route path={PagePath.About} element={<AboutPage />} />
 
         <Route element={<RequireAuth role={UserRole.User} />}>
           <Route path={PagePath.Account} element={<AccountPage />} />
@@ -34,10 +47,6 @@ export const Router: FC = memo(() => {
           <Route path={PagePath.CreateFlight} element={<CreateFlightPage />} />
           <Route path={PagePath.CheckTicket} element={<CheckTicketPage />} />
         </Route>
-
-        <Route path={PagePath.Flight} element={<FlightPage />} />
-
-        <Route path={PagePath.Flights} element={<FlightsPage />} />
       </Routes>
     </BrowserRouter>
   );

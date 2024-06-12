@@ -1,36 +1,37 @@
 import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { Layout } from "components/layout/Layout";
 import { LayoutImageBg } from "components/layout/LayoutImageBg";
-import { Box, Container, Rating, Typography } from "@mui/material";
-import CreateReviewBg from "/assets/reviews/review_bg.png";
-import { FaStar, FaRegStar } from "react-icons/fa";
-
-import { ReviewType } from "./constants";
+import { Box, Container, Typography } from "@mui/material";
+import CreateFlightBg from "/assets/flights/create_flight_bg.png";
 
 import { ResponseData } from "common/types";
 import {
   ValidationErrorMessages,
+  isEmailValid,
   validateIsEmpty,
 } from "common/utils/validations";
 import { useMutation } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
 import { debounce } from "common/helpers/debounce";
 import { showToastError, showToastSuccess } from "common/utils/toast";
-import { useUserContext } from "common/hooks/userContext";
-import { postReview } from "api/requests/reviews/postReviews";
 import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 import { CustomInput } from "components/wrappers/CustomInput";
 import { CustomButton } from "components/wrappers/CustomButton";
 import { ButtonTheme } from "shared/constants";
 import { CustomTextArea } from "components/wrappers/CustomTextArea";
+import { ContactUsType } from "./constants";
+import { postContactUs } from "api/requests/contact_us/postContactUs";
 
-export const CreateReviewPage: FC = memo(() => {
-  const { accessToken, user } = useUserContext();
-
-  const [rating, setRating] = useState<number | null>(null);
+export const ContactUsPage: FC = memo(() => {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [message, setMessage] = useState("");
 
-  const [messageError, setMessageError] = useState<string>("");
+  const [nameError, setNameError] = useState("");
+  const [emailError, setEmailError] = useState("");
+  const [phoneNumberError, setPhoneNumberError] = useState("");
+  const [messageError, setMessageError] = useState("");
 
   const isPageLoaded = useRef(false);
 
@@ -42,29 +43,17 @@ export const CreateReviewPage: FC = memo(() => {
     isPageLoaded.current = true;
   });
 
-  const validateMessage = () => {
-    const isValid = validateIsEmpty(message);
-    if (!isValid) {
-      setMessageError(ValidationErrorMessages.FieldRequired);
-    }
-    return isValid;
-  };
-
-  const validateAll = (): boolean => {
-    const messageValid = validateMessage();
-
-    return !!messageValid;
-  };
-
   const fetchFunc = useCallback(async () => {
     const params = {
+      name,
+      email,
+      phone_number: phoneNumber,
       message,
-      rating: rating || 0,
     };
-    return await postReview(params, accessToken);
-  }, [message, rating, accessToken]);
+    return await postContactUs(params);
+  }, [name, email, phoneNumber, message]);
 
-  const { mutate } = useMutation<AxiosResponse<ResponseData<ReviewType>>>({
+  const { mutate } = useMutation<AxiosResponse<ResponseData<ContactUsType>>>({
     mutationFn: () => debounce(fetchFunc(), 500),
     onSuccess: (axiosResponse) => {
       if (!axiosResponse) {
@@ -81,15 +70,58 @@ export const CreateReviewPage: FC = memo(() => {
         return;
       }
 
-      showToastSuccess("Thank you for your opinion");
+      showToastSuccess("We will contact you soon");
+      setName("");
+      setEmail("");
+      setPhoneNumber("");
       setMessage("");
-      setRating(0);
     },
     onError: (err: Error) => {
       console.log(err);
       showToastError("Internal server error");
     },
   });
+
+  const validateEmail = () => {
+    const isValid = isEmailValid(email);
+    if (!isValid) {
+      setEmailError(ValidationErrorMessages.ValidEmailRequired);
+    }
+    return isValid;
+  };
+
+  const validateName = () => {
+    const isValid = validateIsEmpty(name);
+    if (!isValid) {
+      setNameError(ValidationErrorMessages.FieldRequired);
+    }
+    return isValid;
+  };
+
+  const validatePhoneNumber = () => {
+    const isValid = validateIsEmpty(phoneNumber);
+    if (!isValid) {
+      setPhoneNumberError(ValidationErrorMessages.FieldRequired);
+    }
+    return isValid;
+  };
+
+  const validateMessage = () => {
+    const isValid = validateIsEmpty(message);
+    if (!isValid) {
+      setMessageError(ValidationErrorMessages.FieldRequired);
+    }
+    return isValid;
+  };
+
+  const validateAll = (): boolean => {
+    const emailValid = validateEmail();
+    const nameValid = validateName();
+    const phoneNumberValid = validatePhoneNumber();
+    const messageValid = validateMessage();
+
+    return emailValid && nameValid && phoneNumberValid && messageValid;
+  };
 
   const handleSubmit = () => {
     if (!validateAll()) return;
@@ -101,7 +133,7 @@ export const CreateReviewPage: FC = memo(() => {
     <>
       <Layout>
         <LayoutImageBg
-          bgImage={CreateReviewBg}
+          bgImage={CreateFlightBg}
           sx={{
             minHeight: "100vh",
             justifyContent: "center",
@@ -152,7 +184,7 @@ export const CreateReviewPage: FC = memo(() => {
                     fontFamily: TitleFont,
                   }}
                 >
-                  Write a Review
+                  Let’s Talk
                 </Typography>
                 <Typography
                   sx={{
@@ -161,8 +193,8 @@ export const CreateReviewPage: FC = memo(() => {
                     marginTop: "1rem",
                   }}
                 >
-                  We are very pleased that you are willing to share your
-                  experience of flying with us
+                  Write if you have any questions or problems. We are always
+                  happy to help you.
                 </Typography>
               </Box>
             </Box>
@@ -174,56 +206,79 @@ export const CreateReviewPage: FC = memo(() => {
                   md: "",
                   xs: "auto",
                 },
+                "@media (max-width: 400px)": {
+                  width: "100%",
+                },
               }}
             >
               <Box
                 sx={{
                   width: {
-                    md: "70%",
+                    lg: "70%",
                     xs: "100%",
                   },
                   margin: "auto",
                   textAlign: "center",
                 }}
               >
-                <CustomInput
-                  value={user?.name}
-                  readOnly={true}
-                  placeholder="Name"
-                />
-                <Rating
-                  name="simple-controlled"
-                  size="large"
-                  value={rating}
-                  onChange={(_, newRating) => {
-                    setRating(newRating);
-                  }}
+                <Box
                   sx={{
-                    marginTop: "2rem",
-                    "& label": {
-                      marginLeft: "2rem",
-                      "@media (max-width: 350px)": {
-                        marginLeft: "1rem",
-                      },
-                    },
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "baseline",
+                    justifyContent: "space-between",
 
-                    "& label:last-of-type": {
-                      marginLeft: 0,
-                      marginRight: "2rem",
-                      "@media (max-width: 350px)": {
-                        marginRight: "1rem",
-                      },
-                    },
-
-                    "& label span svg": {
-                      width: {
-                        lg: "45px",
-                        xs: "25px",
-                      },
+                    "@media (max-width: 400px)": {
+                      display: "block",
                     },
                   }}
-                  icon={<FaStar />}
-                  emptyIcon={<FaRegStar />}
+                >
+                  <Box sx={{ flex: "1 1 0" }}>
+                    <CustomInput
+                      placeholder="Name"
+                      onFocus={() => {
+                        setNameError("");
+                      }}
+                      onBlur={validateName}
+                      onChange={(newName) => setName(newName as string)}
+                      error={nameError}
+                      value={name}
+                    />
+                  </Box>
+                  <Box
+                    sx={{
+                      flex: "1 1 0",
+                      "@media (max-width: 400px)": {
+                        marginLeft: 0,
+                        marginTop: "25px",
+                      },
+                      marginLeft: "25px",
+                    }}
+                  >
+                    <CustomInput
+                      placeholder="Mobile phone"
+                      onFocus={() => {
+                        setPhoneNumberError("");
+                      }}
+                      onBlur={validatePhoneNumber}
+                      onChange={(newPhoneNumber) =>
+                        setPhoneNumber(newPhoneNumber as string)
+                      }
+                      error={phoneNumberError}
+                      value={phoneNumber}
+                    />
+                  </Box>
+                </Box>
+                <CustomInput
+                  sx={{ marginTop: "30px" }}
+                  placeholder="Email"
+                  onFocus={() => {
+                    setEmailError("");
+                  }}
+                  onBlur={validateEmail}
+                  onChange={(newEmail) => setEmail(newEmail as string)}
+                  error={emailError}
+                  value={email}
                 />
                 <CustomTextArea
                   sx={{

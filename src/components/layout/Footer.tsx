@@ -51,8 +51,9 @@ export const Footer: FC = memo(() => {
             }}
             variant="inherit"
           >
-            Lorem Ipsum is simply dummy text of the printing and typesetting
-            industry. Lorem Ipsum has been
+            SkyFly - Your ultimate travel companion for seamless flight
+            bookings. Discover, compare, and reserve flights effortlessly with
+            our user-friendly app. Experience the sky with SkyFly!
           </Typography>
         </Grid>
         <Grid item md={4} xs={12}>

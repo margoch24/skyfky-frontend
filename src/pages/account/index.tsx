@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from "react";
+import { FC, memo, useEffect, useRef } from "react";
 import { Layout } from "components/layout/Layout";
 import { Box } from "@mui/material";
 import { Panel } from "./Panel";
@@ -8,9 +8,14 @@ export const AccountPage: FC = memo(() => {
   const { pageKey }: { pageKey?: string } = useCustomUrlQuery(
     window.location.search
   );
+  const isPageLoaded = useRef(false);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
   });
 
   return (

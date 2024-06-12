@@ -45,6 +45,8 @@ export enum PagePath {
   All = "*",
   CheckTicket = "/check-ticket",
   Page404 = "/not-found",
+  PrivacyPolicy = "/privacy-policy",
+  TermsConditions = "/terms-conditions",
 }
 
 export enum ButtonTheme {
@@ -75,11 +77,11 @@ export const HeaderLinks = [
 export const FooterLinks = [
   {
     title: "Terms & Conditions",
-    path: "/terms-conditions",
+    path: PagePath.TermsConditions,
   },
   {
     title: "Privacy Policy",
-    path: "/privacy-policy",
+    path: PagePath.PrivacyPolicy,
   },
 ];
 

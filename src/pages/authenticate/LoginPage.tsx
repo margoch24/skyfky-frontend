@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useState } from "react";
+import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { Layout } from "components/layout/Layout";
 import { LayoutImageBg } from "components/layout/LayoutImageBg";
 import {
@@ -47,8 +47,14 @@ export const LoginPage: FC = memo(() => {
   const open = !!anchorEl;
   const popoverId = open ? "simple-popover" : undefined;
 
+  const isPageLoaded = useRef(false);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
   });
 
   const validatePassword = () => {

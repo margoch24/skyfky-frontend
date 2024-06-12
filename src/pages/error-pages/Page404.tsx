@@ -1,7 +1,7 @@
 import { useNavigate } from "react-router-dom";
 
 import { Box, Typography } from "@mui/material";
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useRef } from "react";
 import { Layout } from "components/layout/Layout";
 import { DarkColor } from "shared/constants/colors";
 import { CustomButton } from "components/wrappers/CustomButton";
@@ -10,6 +10,16 @@ import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 
 export const Page404: FC = memo(() => {
   const navigate = useNavigate();
+
+  const isPageLoaded = useRef(false);
+
+  useEffect(() => {
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
+  });
 
   return (
     <Layout>

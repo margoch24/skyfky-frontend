@@ -17,7 +17,7 @@ interface HeaderMobileProps {
 }
 
 export const HeaderMobile: FC<HeaderMobileProps> = memo(({ showMenu }) => {
-  const { user } = useUserContext();
+  const { user, isAdmin } = useUserContext();
   const { pathname } = window.location;
   const authPaths: string[] = [PagePath.Login, PagePath.Register];
 
@@ -75,16 +75,19 @@ export const HeaderMobile: FC<HeaderMobileProps> = memo(({ showMenu }) => {
             textDecoration: "none",
           }}
         >
-          <Typography
-            sx={{
-              marginRight: "1rem",
-              fontFamily: SubtitleFont,
-              color: "white",
-              fontSize: "22px",
-            }}
-          >
-            {user.name}
-          </Typography>
+          {!isAdmin && (
+            <Typography
+              sx={{
+                marginRight: "1rem",
+                fontFamily: SubtitleFont,
+                color: "white",
+                fontSize: "22px",
+              }}
+            >
+              {user.name}
+            </Typography>
+          )}
+
           <Box
             sx={{
               width: "50px",

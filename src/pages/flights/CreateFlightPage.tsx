@@ -1,4 +1,4 @@
-import { FC, memo, useCallback, useEffect, useState } from "react";
+import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { Layout } from "components/layout/Layout";
 import { LayoutImageBg } from "components/layout/LayoutImageBg";
 import { Box, Container, IconButton, Typography } from "@mui/material";
@@ -60,8 +60,14 @@ export const CreateFlightPage: FC = memo(() => {
   const [airlineError, setAirlineError] = useState<string>("");
   const [scoreError, setScoreError] = useState<string>("");
 
+  const isPageLoaded = useRef(false);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
   });
 
   const handlePopupOpen = () => {

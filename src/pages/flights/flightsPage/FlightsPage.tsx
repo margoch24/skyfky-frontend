@@ -129,24 +129,22 @@ export const FlightsPage: FC = memo(() => {
               display: "flex",
               flexDirection: "column",
               width: {
-                lg: "70%",
+                lg: "80%",
+                sm: "250px",
                 xs: "100%",
               },
-              margin: "auto",
+              margin: {
+                lg: "auto",
+                xs: "0 0 0 auto",
+              },
             }}
           >
             <CustomButton
               onClick={handleResetAll}
               sx={{
+                width: "auto",
                 marginTop: "3rem",
-                width: {
-                  lg: "auto",
-                  xs: "fit-content",
-                },
-                margin: {
-                  lg: "2rem 0",
-                  xs: "2rem 0 2rem auto",
-                },
+                marginBottom: "3rem",
               }}
               title="Reset all"
               theme={ButtonTheme.Transparent}
@@ -155,7 +153,12 @@ export const FlightsPage: FC = memo(() => {
             {isAdmin && (
               <CustomButton
                 sx={{
-                  marginTop: "3rem",
+                  width: "auto",
+                  marginBottom: "3rem",
+                  marginTop: {
+                    lg: 0,
+                    xs: "-1.5rem",
+                  },
                 }}
                 onClick={() => navigate(PagePath.CreateFlight)}
                 title="Add new flight"

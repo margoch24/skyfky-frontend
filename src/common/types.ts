@@ -32,6 +32,7 @@ export enum Endpoints {
   PostReview = "/review",
   GetReviews = "/reviews",
   CheckTicket = "/check-ticket",
+  PostContactUs = "/contact_us",
 }
 
 export type ResponseData<T> = {

@@ -1,4 +1,4 @@
-import { FC, memo, useEffect } from "react";
+import { FC, memo, useEffect, useRef } from "react";
 import { Layout } from "components/layout/Layout";
 import { Box, Container, Typography } from "@mui/material";
 import AirplineWingBg from "/assets/airplane_wing_bg.png";
@@ -16,8 +16,14 @@ export const CreateTicketPage: FC = memo(() => {
   const { flight }: { flight: FlightType } = state ?? {};
   const navigate = useNavigate();
 
+  const isPageLoaded = useRef(false);
+
   useEffect(() => {
-    window.scrollTo(0, 0);
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
   });
 
   return (

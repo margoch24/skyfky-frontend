@@ -5,7 +5,7 @@ import { debounce } from "common/helpers/debounce";
 import { useCustomUrlQuery } from "common/helpers/query";
 import { ResponseData } from "common/types";
 import { Layout } from "components/layout/Layout";
-import { FC, memo, useCallback, useEffect, useState } from "react";
+import { FC, memo, useCallback, useEffect, useRef, useState } from "react";
 import { FlightType, SeatType } from "./types";
 import { Box, Container, Grid, Typography } from "@mui/material";
 import { getImageHelper } from "common/helpers/getImage";
@@ -35,9 +35,17 @@ export const FlightPage: FC = memo(() => {
   const navigate = useNavigate();
   const [disabledButton, setDisabledButton] = useState<boolean>(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const isPageLoaded = useRef(false);
+
+  useEffect(() => {
+    if (!isPageLoaded.current) {
+      window.scrollTo(0, 0);
+    }
+
+    isPageLoaded.current = true;
+  });
 
   const fetchFunc = useCallback(async () => {
-    window.scrollTo(0, 0);
     return await getFlight(flight_id as string);
   }, [flight_id]);
 
