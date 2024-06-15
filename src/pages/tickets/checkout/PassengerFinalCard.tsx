@@ -39,9 +39,9 @@ export const PassengerFinalCard: FC<PassengerFinalCardProps> = memo(
           background: `rgba(111, 130, 170, 0.3)`,
           ...(index !== 0 && { marginTop: "3rem" }),
           borderRadius: "10px",
-          maxWidth: "600px",
-          width: "650px",
+          maxWidth: "650px",
           position: "relative",
+          margin: "2rem auto 0",
         }}
       >
         <Box
@@ -56,6 +56,9 @@ export const PassengerFinalCard: FC<PassengerFinalCardProps> = memo(
               fontSize: "22px",
               fontFamily: SubtitleFont,
               color: DarkColor,
+              flex: "1 1 0",
+              wordBreak: "break-all",
+              paddingRight: "10px",
             }}
           >
             {passenger?.name} {passenger?.surname}

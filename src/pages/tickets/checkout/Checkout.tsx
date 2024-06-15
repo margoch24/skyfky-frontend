@@ -1,4 +1,4 @@
-import { FC, memo, useCallback } from "react";
+import { FC, memo, useCallback, useEffect, useRef } from "react";
 import { Box, Typography } from "@mui/material";
 import { CustomButton } from "components/wrappers/CustomButton";
 import {
@@ -38,6 +38,16 @@ export const Checkout: FC<ElementProps> = memo(
       setChildAmount,
     } = useQueryContext();
     const { accessToken } = useUserContext();
+
+    const isPageLoaded = useRef(false);
+
+    useEffect(() => {
+      if (!isPageLoaded.current) {
+        window.scrollTo(0, 0);
+      }
+
+      isPageLoaded.current = true;
+    });
 
     const fetchDiscountsFunc = useCallback(async () => {
       return await getDiscounts();
@@ -125,66 +135,77 @@ export const Checkout: FC<ElementProps> = memo(
     return (
       <Box
         sx={{
-          marginTop: "5rem",
+          margin: "5rem 1rem",
         }}
       >
-        <Box>
-          {passengers.map((passenger, index) => (
-            <PassengerFinalCard
-              key={index}
-              passenger={passenger}
-              flight={flight}
-              index={index}
-              adultsPrice={flight?.price || 0}
-              childrenPrice={
-                (flight?.price || 0) * Number(childDiscount?.value)
-              }
-              currency={currency}
-              childDiscount={childDiscount}
-            />
-          ))}
-        </Box>
-
         <Box
           sx={{
-            marginTop: "3rem",
+            margin: "auto",
           }}
         >
-          <Typography
-            sx={{
-              fontSize: "25px",
-              fontFamily: SubtitleFont,
-              color: DarkColor,
-            }}
-          >
-            <span
-              style={{
-                fontSize: "22px",
-                opacity: "60%",
-              }}
-            >
-              Total amount of tickets:
-            </span>{" "}
-            {adultAmount + childAmount}
-          </Typography>
+          <Box>
+            {passengers.map((passenger, index) => (
+              <PassengerFinalCard
+                key={index}
+                passenger={passenger}
+                flight={flight}
+                index={index}
+                adultsPrice={flight?.price || 0}
+                childrenPrice={
+                  (flight?.price || 0) * Number(childDiscount?.value)
+                }
+                currency={currency}
+                childDiscount={childDiscount}
+              />
+            ))}
+          </Box>
 
-          <Typography
+          <Box
             sx={{
-              fontSize: "25px",
-              fontFamily: SubtitleFont,
-              color: DarkColor,
+              margin: "3rem auto 0",
+              maxWidth: "690px",
             }}
           >
-            <span
-              style={{
-                fontSize: "22px",
-                opacity: "60%",
+            <Typography
+              sx={{
+                fontSize: "25px",
+                fontFamily: SubtitleFont,
+                color: DarkColor,
               }}
             >
-              Total price:
-            </span>{" "}
-            {adultsPrice + childrenPrice || adultsPrice} {currency}
-          </Typography>
+              <span
+                style={{
+                  fontSize: "22px",
+                  opacity: "60%",
+                }}
+              >
+                Total amount of tickets:
+              </span>{" "}
+              {adultAmount + childAmount}
+            </Typography>
+
+            <Typography
+              sx={{
+                fontSize: "25px",
+                fontFamily: SubtitleFont,
+                color: DarkColor,
+                marginTop: {
+                  sm: 0,
+                  xs: "1rem",
+                },
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "22px",
+                  opacity: "60%",
+                }}
+              >
+                Total price:
+              </span>{" "}
+              {adultsPrice + childrenPrice || adultsPrice} {currency}
+            </Typography>
+          </Box>
         </Box>
 
         <Box
@@ -192,8 +213,12 @@ export const Checkout: FC<ElementProps> = memo(
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            width: "500px",
+            maxWidth: "500px",
             margin: "5rem auto 0",
+
+            "@media (max-width: 375px)": {
+              flexDirection: "column",
+            },
           }}
         >
           <Box
@@ -203,6 +228,11 @@ export const Checkout: FC<ElementProps> = memo(
             }}
           >
             <CustomButton
+              sx={{
+                "@media (max-width: 375px)": {
+                  width: "184px",
+                },
+              }}
               onClick={handlePrevious}
               title="Previous"
               theme={ButtonTheme.Dark}

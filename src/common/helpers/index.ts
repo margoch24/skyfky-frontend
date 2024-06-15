@@ -13,3 +13,8 @@ export const getFormattedTime = (milliseconds: number) => {
 
   return `${days}: ${hours}: ${minutes}: ${seconds}`;
 };
+
+export const getFormattedFullDate = (milliseconds: number) => {
+  const date = new Date(milliseconds).toLocaleString("lt");
+  return date.substring(0, date.length - 3);
+};

@@ -3,6 +3,7 @@ import { FC, memo, useEffect, useState } from "react";
 import { SlideshowItems } from "./constants";
 import { DarkBlue } from "shared/constants/colors";
 import { SecondTitleFont } from "shared/constants/fonts";
+import { setInnerWindowWidth } from "common/utils/browser";
 
 export const AboutSlideshow: FC = memo(() => {
   const ImageWidth = 550;
@@ -15,15 +16,8 @@ export const AboutSlideshow: FC = memo(() => {
   const [currentItemIndex, setCurrentItemIndex] = useState(0);
   const [translateX, setTranslateX] = useState(0);
 
-  useEffect(() => {
-    const updateWindowDimensions = () => {
-      const newWidth = window.innerWidth;
-      setImageSmallWidth(newWidth - 32);
-    };
-
-    window.addEventListener("resize", updateWindowDimensions);
-    return () => window.removeEventListener("resize", updateWindowDimensions);
-  }, []);
+  const editInnerWidth = (width: number) => width - 32;
+  useEffect(() => setInnerWindowWidth(setImageSmallWidth, editInnerWidth), []);
 
   useEffect(() => {
     const interval = setInterval(() => {

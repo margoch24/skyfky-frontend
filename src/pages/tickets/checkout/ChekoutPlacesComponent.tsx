@@ -75,7 +75,8 @@ export const ChekoutPlacesComponent: FC<CheckoutPlacesComponentProps> = memo(
           {fromCountry?.text_en},{" "}
           <span
             style={{
-              opacity: "60%",
+              fontStyle: "italic",
+              fontSize: "20px",
             }}
           >
             {from?.text}
@@ -86,6 +87,7 @@ export const ChekoutPlacesComponent: FC<CheckoutPlacesComponentProps> = memo(
             fontSize: "22px",
             fontFamily: SubtitleFont,
             color: DarkColor,
+            marginTop: "10px",
           }}
         >
           <span
@@ -99,7 +101,8 @@ export const ChekoutPlacesComponent: FC<CheckoutPlacesComponentProps> = memo(
           {toCountry?.text_en},{" "}
           <span
             style={{
-              opacity: "60%",
+              fontStyle: "italic",
+              fontSize: "20px",
             }}
           >
             {to?.text}

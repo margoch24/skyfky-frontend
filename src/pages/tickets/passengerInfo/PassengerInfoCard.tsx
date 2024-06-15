@@ -147,16 +147,7 @@ export const PassengerInfoCard: FC<PassengerInfoCardProps> = memo(
       };
 
       setPassengerInfo(newPassengerInfo);
-    }, [
-      name,
-      surname,
-      dateOfBirth,
-      parent,
-      type,
-      cardId,
-      passengerInfo,
-      validateAll,
-    ]);
+    }, [name, surname, dateOfBirth, parent]);
 
     useEffect(() => {
       onFinish?.({ data: passengerInfo, cardId });
@@ -167,8 +158,7 @@ export const PassengerInfoCard: FC<PassengerInfoCardProps> = memo(
         <Box
           key={index}
           sx={{
-            minWidth: "450px",
-            width: "450px",
+            maxWidth: "450px",
             margin: "5rem auto",
           }}
         >

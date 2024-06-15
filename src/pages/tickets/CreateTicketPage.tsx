@@ -1,4 +1,4 @@
-import { FC, memo, useEffect, useRef } from "react";
+import { FC, memo } from "react";
 import { Layout } from "components/layout/Layout";
 import { Box, Container, Typography } from "@mui/material";
 import AirplineWingBg from "/assets/airplane_wing_bg.png";
@@ -16,16 +16,6 @@ export const CreateTicketPage: FC = memo(() => {
   const { flight }: { flight: FlightType } = state ?? {};
   const navigate = useNavigate();
 
-  const isPageLoaded = useRef(false);
-
-  useEffect(() => {
-    if (!isPageLoaded.current) {
-      window.scrollTo(0, 0);
-    }
-
-    isPageLoaded.current = true;
-  });
-
   return (
     <Layout>
       <Box
@@ -34,7 +24,10 @@ export const CreateTicketPage: FC = memo(() => {
           backgroundPosition: "top",
           backgroundSize: "cover",
           backgroundRepeat: "no-repeat",
-          height: "300px",
+          height: {
+            sm: "300px",
+            xs: "200px",
+          },
         }}
       ></Box>
 

@@ -11,16 +11,19 @@ export const CABIN_CLASSES = [
     value: CabinClassEnum.First,
     label: "First",
     rows: 5,
+    firstRowIndex: 0,
   },
   {
     value: CabinClassEnum.Business,
     label: "Business",
     rows: 10,
+    firstRowIndex: 5,
   },
   {
     value: CabinClassEnum.Economy,
     label: "Economy",
     rows: 15,
+    firstRowIndex: 15,
   },
 ];
 

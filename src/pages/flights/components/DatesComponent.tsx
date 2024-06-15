@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { DarkColor } from "shared/constants/colors";
 import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 import { FlightType } from "../types";
+import { getFormattedFullDate } from "common/helpers";
 
 interface DatesComponentProps {
   flight?: FlightType;
@@ -10,10 +11,10 @@ interface DatesComponentProps {
 
 export const DatesComponent: FC<DatesComponentProps> = memo(({ flight }) => {
   const arrival = flight?.arrival
-    ? new Date(flight?.arrival).toLocaleString("lt")
+    ? getFormattedFullDate(flight?.arrival)
     : null;
   const departure = flight?.departure
-    ? new Date(flight?.departure).toLocaleString("lt")
+    ? getFormattedFullDate(flight?.departure)
     : null;
 
   return (

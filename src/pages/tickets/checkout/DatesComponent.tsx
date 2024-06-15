@@ -3,6 +3,7 @@ import { Box, Typography } from "@mui/material";
 import { DarkColor } from "shared/constants/colors";
 import { SubtitleFont } from "shared/constants/fonts";
 import { FlightType } from "pages/flights/types";
+import { getFormattedFullDate } from "common/helpers";
 
 interface DatesComponentProps {
   flight?: FlightType;
@@ -10,10 +11,10 @@ interface DatesComponentProps {
 
 export const DatesComponent: FC<DatesComponentProps> = memo(({ flight }) => {
   const arrival = flight?.arrival
-    ? new Date(flight?.arrival).toLocaleString("lt")
+    ? getFormattedFullDate(flight?.arrival)
     : null;
   const departure = flight?.departure
-    ? new Date(flight?.departure).toLocaleString("lt")
+    ? getFormattedFullDate(flight?.departure)
     : null;
 
   return (
@@ -42,7 +43,7 @@ export const DatesComponent: FC<DatesComponentProps> = memo(({ flight }) => {
             {departure.split(" ")[0]},{" "}
             <span
               style={{
-                opacity: "60%",
+                fontSize: "20px",
               }}
             >
               {departure.split(" ")[1]}
@@ -53,6 +54,7 @@ export const DatesComponent: FC<DatesComponentProps> = memo(({ flight }) => {
               fontSize: "22px",
               fontFamily: SubtitleFont,
               color: DarkColor,
+              marginTop: "10px",
             }}
           >
             <span
@@ -66,7 +68,7 @@ export const DatesComponent: FC<DatesComponentProps> = memo(({ flight }) => {
             {arrival.split(" ")[0]},{" "}
             <span
               style={{
-                opacity: "60%",
+                fontSize: "20px",
               }}
             >
               {arrival.split(" ")[1]}

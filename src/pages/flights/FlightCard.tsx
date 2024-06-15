@@ -9,16 +9,23 @@ import Star from "/assets/star.png";
 
 import { SubtitleFont, TitleFont } from "shared/constants/fonts";
 import { CabinClassColors } from "./constants";
-import { capitalizeFirstLetter } from "common/helpers";
+import { capitalizeFirstLetter, getFormattedFullDate } from "common/helpers";
 import { DarkColor } from "shared/constants/colors";
-import { CurrencyToSign, PagePath } from "shared/constants";
+import { CurrencyEnum, CurrencyToSign, PagePath } from "shared/constants";
 import { FaArrowRightLong } from "react-icons/fa6";
 import { getMapboxPlaces } from "api/requests/flights/getMapboxPlaces";
 import { useQuery } from "@tanstack/react-query";
 import { AxiosResponse } from "axios";
-import { MapboxResponse } from "common/types";
+import {
+  DiscountType,
+  MapboxResponse,
+  QueryKeys,
+  ResponseData,
+} from "common/types";
 import { debounce } from "common/helpers/debounce";
 import { useNavigate } from "react-router-dom";
+import { useQueryContext } from "common/hooks/queryContext";
+import { getDiscounts } from "api/requests/settings/getDiscounts";
 
 export const FlightCard: FC<{
   sx?: SxProps;
@@ -26,10 +33,11 @@ export const FlightCard: FC<{
   lastCardRef?: (node?: Element | null) => void;
 }> = memo(({ sx, flight, lastCardRef }) => {
   const navigate = useNavigate();
-  const cabinClassColor = CabinClassColors[flight.cabin_class];
-  const arrival = new Date(flight.arrival).toLocaleString("lt");
-  const departure = new Date(flight.departure).toLocaleString("lt");
+  const { adultAmount, childAmount } = useQueryContext();
 
+  const cabinClassColor = CabinClassColors[flight.cabin_class];
+  const arrival = getFormattedFullDate(flight.arrival);
+  const departure = getFormattedFullDate(flight.departure);
   const [isHovered, setIsHovered] = useState<boolean>(false);
 
   const handleMouseEnter = () => {
@@ -39,6 +47,18 @@ export const FlightCard: FC<{
   const handleMouseLeave = () => {
     setIsHovered(false);
   };
+
+  const fetchDiscountsFunc = useCallback(async () => {
+    return await getDiscounts();
+  }, []);
+
+  const { data: discountsAxiosData } = useQuery<
+    AxiosResponse<ResponseData<DiscountType[]>>
+  >({
+    queryKey: [QueryKeys.GetDiscounts],
+    queryFn: () => debounce(fetchDiscountsFunc(), 500),
+    refetchOnWindowFocus: false,
+  });
 
   const fetchFromFunc = useCallback(async () => {
     return await getMapboxPlaces({
@@ -73,6 +93,16 @@ export const FlightCard: FC<{
 
   const [to] = toAxiosData?.data?.features ?? [];
   const toCountry = to?.context?.find((value) => value?.id.includes("country"));
+
+  const discounts = discountsAxiosData?.data?.data ?? [];
+  const childDiscount = discounts?.find(
+    (discount) => discount.key === "ticket_child_discount"
+  );
+  const adultsPrice = (flight?.price || 0) * (adultAmount || 1);
+  const childrenPrice =
+    (flight?.price || 0) * (childAmount || 0) * Number(childDiscount?.value);
+
+  const currency = CurrencyToSign[flight?.currency || CurrencyEnum.EUR];
 
   return (
     <Box
@@ -301,7 +331,7 @@ export const FlightCard: FC<{
             marginBottom: "1rem",
           }}
         >
-          {flight.price} {CurrencyToSign[flight.currency]}
+          {adultsPrice + childrenPrice || adultsPrice} {currency}
         </Typography>
 
         <Box

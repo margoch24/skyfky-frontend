@@ -1,4 +1,4 @@
-import { FC, memo } from "react";
+import { FC, memo, useEffect, useRef } from "react";
 import { Box, Container, Typography } from "@mui/material";
 import { useQueryContext } from "common/hooks/queryContext";
 import { SubtitleFont } from "shared/constants/fonts";
@@ -10,9 +10,20 @@ import { PassengerInfoCard } from "./PassengerInfoCard";
 import { PassengerInfoType, PassengerType } from "../types";
 import { ElementProps } from "../TicketCreationPanel";
 import { SeatType } from "pages/flights/types";
+import { sortAscPassengers } from "common/helpers/passengers";
 
 export const PassengersInfo: FC<ElementProps> = memo(
   ({ onNext, passengers, setPassengers, flight }) => {
+    const isPageLoaded = useRef(false);
+
+    useEffect(() => {
+      if (!isPageLoaded.current) {
+        window.scrollTo(0, 0);
+      }
+
+      isPageLoaded.current = true;
+    });
+
     const handleNext = () => {
       onNext?.();
     };
@@ -70,16 +81,21 @@ export const PassengersInfo: FC<ElementProps> = memo(
         cardId.includes(PassengerType.Child)
       );
 
+      const sortedAdultPassengers =
+        filteredAdultPassengers.sort(sortAscPassengers);
+      const sortedChildPassengers =
+        filteredChildPassengers.sort(sortAscPassengers);
+
       if (lastPassengerType === PassengerType.Adult) {
-        filteredAdultPassengers.pop();
+        sortedAdultPassengers.pop();
       }
 
       if (lastPassengerType === PassengerType.Child) {
-        filteredChildPassengers.pop();
+        sortedChildPassengers.pop();
       }
 
       setPassengers(() => {
-        return [...filteredAdultPassengers, ...filteredChildPassengers];
+        return [...sortedAdultPassengers, ...sortedChildPassengers];
       });
     };
 
@@ -88,14 +104,28 @@ export const PassengersInfo: FC<ElementProps> = memo(
         maxWidth="xl"
         sx={{
           position: "relative",
-          width: "1536px",
         }}
       >
         <Box
           sx={{
-            position: "absolute",
+            position: {
+              md: "absolute",
+            },
             top: 0,
-            right: 0,
+            right: "20px",
+
+            "@media (max-width: 900px)": {
+              display: "flex",
+              alignItems: "baseline",
+              justifyContent: "space-between",
+              maxWidth: "450px",
+              margin: "1rem auto 0",
+            },
+
+            "@media (max-width: 310px)": {
+              flexDirection: "column",
+              alignItems: "center",
+            },
           }}
         >
           <Box>

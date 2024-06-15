@@ -6,6 +6,7 @@ import { TicketCreationPages } from "./constants";
 import { PassengerInfoType } from "./types";
 import { FlightType, SeatType } from "pages/flights/types";
 import { Divider } from "components/wrappers/Divider";
+import { setInnerWindowWidth } from "common/utils/browser";
 
 export interface ElementProps {
   onNext?: () => void;
@@ -32,6 +33,9 @@ export const TicketCreationPanel: FC<TicketCreationPanelProps> = memo(
     const [Element, setElement] = useState<FC<ElementProps> | undefined>(
       defaultPage?.element
     );
+
+    const [innerWidth, setInnerWidth] = useState(window.innerWidth);
+    useEffect(() => setInnerWindowWidth(setInnerWidth), []);
 
     useEffect(() => {
       const currentPage = TicketCreationPages.find(
@@ -80,12 +84,13 @@ export const TicketCreationPanel: FC<TicketCreationPanelProps> = memo(
       <Box>
         <Box
           sx={{
-            width: "100%",
+            width: "inherit",
             backgroundColor: DarkColor,
             display: "flex",
             flexDirection: "row",
             alignItems: "center",
             justifyContent: "center",
+            paddingRight: "20px",
           }}
         >
           {TicketCreationPages.map(({ key, title }, index) => (
@@ -113,6 +118,10 @@ export const TicketCreationPanel: FC<TicketCreationPanelProps> = memo(
                       ? "rgba(111, 130, 170, 0.6)"
                       : "transparent",
                 },
+
+                "@media (max-width: 350px)": {
+                  padding: "15px 25px",
+                },
               }}
             >
               <span
@@ -120,7 +129,7 @@ export const TicketCreationPanel: FC<TicketCreationPanelProps> = memo(
                   marginLeft: "1rem",
                 }}
               >
-                {title}
+                {innerWidth <= 900 ? index + 1 : title}
               </span>
 
               {index === 0 && (
@@ -194,8 +203,8 @@ export const TicketCreationPanel: FC<TicketCreationPanelProps> = memo(
         >
           <Box
             sx={{
-              width: "fit-content",
               margin: "auto",
+              width: "100%",
             }}
           >
             {Element && (
